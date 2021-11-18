@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+/** 自定义logo字体 **/
+@font-face {
+  font-family: "Moe-Mashiro";
+  src: url('1.woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
