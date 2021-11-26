@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon.png' %}">
+    <title>bidding登录界面</title>
+    <!-- Custom CSS -->
+    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Login box.scss -->
+    <!-- ============================================================== -->
+
+    <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+         style="background:url({% static 'assets/images/big/auth-bg.jpg' %}) no-repeat center center;">
+
+        <div class="auth-box row">
+            <div class="col-lg-7 col-md-5 modal-bg-img"
+                 style="background-image: url({% static 'assets/images/big/3.jpg' %});">
+            </div>
+            <div class="col-lg-5 col-md-7 bg-white">
+                <div class="p-3">
+                    <div class="text-center">
+                        <img src="{% static 'assets/images/big/icon.png' %}" alt="wrapkit">
+                    </div>
+                    <h2 class="mt-3 text-center">Sign In</h2>
+                    <p class="text-center"> 输入您的用户名和密码以访问管理面板.</p>
+                    <form class="mt-4">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="uname">Username</label>
+                                    <input name="uname" class="form-control" id="uname" type="text"
+                                           placeholder="请输入用户名">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="pwd">Password</label>
+                                    <input name="password" class="form-control" id="pwd" type="password"
+                                           placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 text-center">
+
+                                <button id="btn" type="button" class="btn btn-block btn-dark">登录</button>
+                            </div>
+                            <div class="col-lg-12 text-center mt-5">
+                                还没有账号？ <a href="/bidding/register/" class="text-danger">注册</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src=" {% static 'assets/libs/jquery/dist/jquery.min.js' %} "></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %} "></script>
+    <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.min.js' %} "></script>
+
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $(".preloader ").fadeOut();
+    </script>
+    <script>
+
+
+        $('#btn').click(function () {
+
+            var uname = $('#uname').val();  //获取文本框的输入的数据
+            var password = $('#pwd').val();
+            $.ajax({
+                url: '/bidding/login/',
+                type: 'post',
+                data: {
+                    uname: uname, password: password
+                },// request.POST.get('username')  #连同请求发送到服务器的数据， django通过POST方法获取数据，
+                success: function (res) {
+                    console.log(res, typeof res) //获取服务端发送的数据
+                    console.log(res.err)
+                    if (res.err === 'ok') {
+                        location.href = '/bidding/'  	//刷新页面
+                    } else {
+                        alert(res.err)
+                    }
+                },
+                error: function (res) {
+                    if (res.status === 400) {
+
+                        alert(res.responseJSON.err)
+
+
+                    } else if (res.status === 500) {
+                        //......
+                    }
+                }
+            })
+        })
+        $("body").keydown(function () {
+            undefined
+            if (event.keyCode == "13") {//keyCode=13是回车键
+                $('#btn').click();
+            }
+        });
+
+    </script>
+</div>
+</body>
+
+</html>

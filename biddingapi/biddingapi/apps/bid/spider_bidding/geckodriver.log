@@ -1,0 +1,38 @@
+1633933253875	geckodriver	INFO	Listening on 127.0.0.1:62282
+1633933256952	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\LIXIN_~1\\AppData\\Local\\Temp\\rust_mozprofileGcuVX3"
+1633933258369	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\lixin_data\\AppData\\Local\\Temp\\rust_mozprofileGcuVX3\\search.json.mozlz4", (void 0)))
+1633933261197	Marionette	INFO	Listening on port 63683
+1633933261271	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://www.suizhou.gov.cn/hVRsx89to69a/AXj9tab/d66055, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1633933675669	Marionette	INFO	Stopped listening on port 63683
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+\\Local\\Temp\\rust_mozprofilert2wKw\\search.json.mozlz4", (void 0)))
+1633933561328	Marionette	INFO	Listening on port 64283
+1633933561670	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://www.suizhou.gov.cn/hVRsx89to69a/AXj9tab/d66055, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1633933669808	Marionette	INFO	Stopped listening on port 64283
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1633933783700	geckodriver	INFO	Listening on 127.0.0.1:59756
+1633933786715	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\LIXIN_~1\\AppData\\Local\\Temp\\rust_mozprofileRqUTWv"
+1633933787873	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\lixin_data\\AppData\\Local\\Temp\\rust_mozprofileRqUTWv\\search.json.mozlz4", (void 0)))
+1633933790644	Marionette	INFO	Listening on port 64732
+1633933790960	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://www.suizhou.gov.cn/hVRsx89to69a/AXj9tab/d66055, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: http://www.suizhou.gov.cn/hVRsx89to69a/AXj9tab/d66055, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WebGL context was lost.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WebGL context was lost.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WebGL context was lost.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://static.zhihu.com/heifetz/main.zswsdid.87bcc85668373bfaedfa.js, line 1: WebGL context was lost.

@@ -1,0 +1,926 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block avatar %}
+
+    <li class="nav-item dropdown">
+
+    </li>
+    <li class="nav-item dropdown" v-show="true">
+
+        <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img id='img_avatar' src="{% static 'assets/images/users/touxiang.png' %}" alt="user"
+                 class="rounded-circle"
+                 width="40">
+            <span class="ml-2 d-none d-lg-inline-block"><span>你好鸭！,</span> <span
+                    class="text-dark">{{ uname }}</span> <i data-feather="chevron-down"
+                                                            class="svg-icon"></i></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+            <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
+                                                                  class="svg-icon mr-2 ml-1"></i>
+                个人中心 开发中....</a>
+            <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
+                                                                  class="svg-icon mr-2 ml-1"></i>
+                我的消息 开发中....</a>
+            <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
+                                                                  class="svg-icon mr-2 ml-1"></i>
+                我的邮箱 开发中....</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
+                                                                  class="svg-icon mr-2 ml-1"></i>
+                账户设置</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/bidding/logout/"><i data-feather="power"
+                                                                class="svg-icon mr-2 ml-1"></i>
+                注销</a>
+            <div class="dropdown-divider"></div>
+            <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">查看资料 开发中....</a>
+            </div>
+        </div>
+    </li>
+{% endblock %}
+{% block content %}
+
+    <div id="app">
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">我的配置中心</h4>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item"><a href="/" class="text-muted">首页</a></li>
+                                    {% verbatim %}
+                                    <li class="breadcrumb-item text-muted active"
+                                        aria-current="page">个人中心
+                                    </li>
+
+                                    {% endverbatim %}
+
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-5 align-self-center">
+
+                        <div class="customize-input float-right">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+
+                {% verbatim %}
+                <template>
+
+
+                    <el-descriptions class="margin-top" title="个人配置显示" :column="3" :size="size">
+                        <template slot="extra">
+                            <el-button type="primary" size="small" @click="func_setting"><i
+                                    class="el-icon-edit-outline"> </i> 编辑
+                            </el-button>
+                        </template>
+
+                        <el-descriptions-item label="用户名">{{ uname }}</el-descriptions-item>
+                        <el-descriptions-item label="密码">{{password}}</el-descriptions-item>
+                        <el-descriptions-item label="邮箱">{{email}}</el-descriptions-item>
+                        <el-descriptions-item label="几天内的数据">{{time_day}}</el-descriptions-item>
+
+                        <el-descriptions-item label="网站选择">{{ url_id }}</el-descriptions-item>
+                        <el-descriptions-item label="发送时间">{{send_time}}</el-descriptions-item>
+                        <el-descriptions-item label="邮件发送">{{state}}</el-descriptions-item>
+                        <el-descriptions-item label="关键字">
+                            <p>{{ key_word}}</p>
+                        </el-descriptions-item>
+
+                    </el-descriptions>
+
+                </template>
+                {% endverbatim %}
+
+                <hr>
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-8">
+
+
+                        <div class="card">
+                            <div class="card-body" v-show="show_s">
+                                <h4 class="card-title">请输入的修改的内容</h4>
+                                <!--     <h6 class="card-subtitle">To use add <code>is-valid</code> class to the input</h6>  -->
+                                <h6 class="card-subtitle">部分选项无法使用，还在调整中...</h6>
+                                <form class="mt-3">
+
+                                    {% verbatim %}
+
+                                    <label class="form-control-label" for="inputSuccess1">请输入需要更改的用户名</label>
+                                    <input type="text" v-model="uname" class="form-control " id="uname">
+                                    <label class="form-control-label" for="inputSuccess1">请输入需要更改的密码</label>
+                                    <input type="text" v-model=password class="form-control " id="password">
+
+                                    <label class="form-control-label" for="inputSuccess1">请输入需要更改的邮箱</label>
+                                    <input type="text" v-model=email class="form-control " id="email">
+                                    <label class="form-control-label" for="inputSuccess1">请选择要获取几天内的数据(必须为整数！)</label>
+                                    <input type="text" v-model=time_day class="form-control " id="time_day">
+                                    <label class="form-control-label" for="inputSuccess1">请选择要获取需要获取数据的网站</label>
+                                    <div class="box-content" style="margin-right: 20px;">
+
+                                        <el-select
+                                                v-model="url_id"
+                                                multiple
+                                                filterable
+                                                collapse-tags
+                                                style="margin-left: 20px;"
+                                                placeholder="请选择">
+                                            <el-option
+
+                                                    v-for="item in options_u"
+                                                    @click.native="all_get(item.value)"
+                                                    :key="item.value"
+                                                    :label="item.label"
+                                                    :value="item.value">
+                                            </el-option>
+                                        </el-select>
+
+                                    </div>
+<!--
+                                    <label class="form-control-label" for="inputSuccess1">请选择发送时间</label>
+                                    <input type="text" v-model=send_time class="form-control " id="send_time">
+-->
+                                    <label class="form-control-label" for="inputSuccess1">选择是否开启邮件发送</label>
+                                    <br>
+                                    <el-switch
+                                            v-model="state"
+                                            active-color="#13ce66"
+                                            inactive-color="#ff4949">
+                                    </el-switch>
+                                    <br>
+                                   <!-- <label class="form-control-label" for="inputSuccess1">请输入关键字并以,或者，隔开</label>-->
+                                                                        <label class="form-control-label" for="inputSuccess1">关键字</label>
+                                    <input type="text" v-model=key_word class="form-control " id="key_word" disabled>
+
+                                    <div class="valid-feedback">
+                                        Success! You've done it.
+                                    </div>
+                                    {% endverbatim %}
+                                </form>
+                                <div style="margin-top: 10px;">
+                                    <el-button @click="update_data">提交</el-button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="card">
+                            {#                            <div class="card-body">#}
+                            {##}
+                            {#                                <h6 class="card-subtitle">可以自定义关键词汇!输入后点击其他位置即可显示.</h6>#}
+                            {##}
+                            {#                            </div>#}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <!-- 引入组件库 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    {#    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>#}
+
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    {#    {% static 'assets/extra-libs/c3/c3.min.css' %}#}
+    <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.js"></script>
+    <script src="{% static 'excel/xlsx.full.min.js' %}"></script>
+    <script src="{% static 'dist/js/date.format.js' %}"></script>
+
+    {#    <script src="{% static 'excel/fileSaver.js' %}"></script>#}
+
+
+    <script>
+
+
+        const BASE_URL = 'http://{{ url_ip }}'; //定义全局接口地址
+        {#const BASE_URL = 'http://127.0.0.1:8000'; //定义全局接口地址#}
+        var vm = new Vue({
+            el: "#app",		//圈地,划分vue的控制区域
+            data() {
+                return {
+                    size: '',
+                    uname: 'sss',
+                    password: 'qwer',
+                    email: 'xiao3952@foxmail.com',
+                    time_day: '1',
+                    url_id: ['1', '4', '3'],
+                    send_time: '2014',
+                    key_word: '第三方、满意度、调查、统计、调研、检查、研究、咨询、巡查、普查、考核、测评、评估、绩效、创建、摸底、核查、入户、监测、社会救助、城市管理',
+                    value2: '',
+                    state: 'true',
+
+                    currentPage4: 1,        // 页数
+                    p_number: 10,
+                    count_t: 0,             // 数据总数
+                    a_url: BASE_URL + '/bidding/download/',
+
+                    // 网站选择
+                    options_u: [
+                        {
+                            value: '0',
+                            label: '全部'
+                        }, {
+                            value: '1',
+                            label: '中国政府采购公告'
+                        }, {
+                            value: '2',
+                            label: '湖北省公共资源交易中心'
+                        }, {
+                            value: '3',
+                            label: '宜昌市公共资源交易中心'
+                        }, {
+                            value: '4',
+                            label: '武汉市政府采购信息发布系统'
+                        }, {
+                            value: '5',
+                            label: '孝感政务服务和大数据管理局'
+                        }, {
+                            value: '6',
+                            label: '黄冈市公共资源交易中心'
+                        }, {
+                            value: '7',
+                            label: '随州政府采购'
+                        }, {
+                            value: '8',
+                            label: '黄石市公共资源交易中心'
+                        }, {
+                            value: '9',
+                            label: '十堰市公共资源交易中心'
+                        }, {
+                            value: '10',
+                            label: '鄂州政府采购'
+                        }, {
+                            value: '11',
+                            label: '荆门市公共资源交易中心'
+                        }, {
+                            value: '12',
+                            label: '荆州市公共资源交易中心'
+                        }, {
+                            value: '13',
+                            label: '咸宁市公共资源交易中心'
+                        }, {
+                            value: '14',
+                            label: '恩施政府采购'
+                        }, {
+                            value: '15',
+                            label: '神农架林区政府采购'
+                        }],
+                    value_u: '0',
+                    show_s: false,
+
+
+                    // 日期选择
+                    pickerOptions: {
+                        shortcuts: [{
+                            text: '最近一天',
+                            onClick(picker) {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24);
+                                picker.$emit('pick', [start, end]);
+                            }
+                        }, {
+                            text: '最近一个月',
+                            onClick(picker) {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                                picker.$emit('pick', [start, end]);
+                            }
+                        }, {
+                            text: '最近三个月',
+                            onClick(picker) {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                                picker.$emit('pick', [start, end]);
+                            }
+                        }, {
+                            text: '最近一年',
+                            onClick(picker) {
+                                const end = new Date();
+                                const start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+                                picker.$emit('pick', [start, end]);
+                            }
+                        }]
+                    },
+                    value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+                    value_time: '',
+                    value_t: '',
+
+                    id_max: 0,       // 每个文件的id 最大值
+
+
+                    search: '',  // 表格搜素
+                    textarea2: '', // 添加的关键字符串
+                    word_v: '',      // 词汇库的选择
+
+                    word_options: '', //    词汇库名称
+
+                    all_state:false,
+
+
+                }
+            },
+            created() {
+                this.get_user_data()
+            },
+
+
+            methods: {
+                all_get(val) {
+
+                    // 数组删除指定元素的构造函数
+                    Array.prototype.remove = function (val) {
+                        var index = this.indexOf(val);
+                        if (index > -1) {
+                            this.splice(index, 1);
+                        }
+                    };
+                    if (val === '0') {
+                        if (this.all_state) {
+                            this.all_state = false;
+                            this.url_id = []
+                        } else {
+                            this.all_state = true;
+                            this.url_id = ['2', '4', '11', '9', '12', '15', '14', '13', '8', '6', '7', '5', '3', '1', '10', '0']
+                        }
+                    } else {
+                        if ('0' in this.url_id) {
+                            this.url_id.remove('0');
+                        }
+                    }
+
+                },
+                func_setting() {
+
+                    this.show_s = this.show_s === false;
+
+                },
+                get_user_data(val) {
+
+                    axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+
+                    axios.put(BASE_URL + '/bidding/settings/', {
+                        uname: this.uname,
+                        password: this.password,
+                        email: this.email,
+                        time_day: this.time_day,
+                        url_id: this.url_id,
+                        send_time: this.send_time,
+                        key_word: this.key_word,
+                        state: this.state,
+
+
+                    })
+                        .then((res) => {
+                            {#console.log(res)#}
+                            {#alert(res.data.uname)#}
+
+                            this.uname = res.data.uname;
+                            this.password = res.data.password;
+                            this.email = res.data.email;
+                            this.time_day = res.data.time_day;
+                            this.url_id = eval(this.url_id);
+                            this.send_time = res.data.send_time;
+                            if (res.data.key_word) {
+                                this.key_word = res.data.key_word;
+                            }
+
+                            this.state = res.data.state;
+
+
+                        })
+                        .catch((res) => {
+                        })
+
+
+                },
+
+                update_data() {
+
+
+                    axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+
+                    axios.post(BASE_URL + '/bidding/settings/', {
+
+                        user_name: this.uname,
+                        password: this.password,
+                        email: this.email,
+                        time_day: this.time_day,
+                        url_id: eval(this.url_id),
+                        send_time: this.send_time,
+                        key_word: this.key_word,
+                        state: this.state,
+
+
+                    })
+                        .then((res) => {
+                            {#console.log(res)#}
+                            {#alert(res.data.uname)#}
+                            this.$message({
+                                message: '恭喜你，成功修改数据！',
+                                type: 'success'
+                            });
+                            this.show_s = false;
+
+                        })
+                        .catch((res) => {
+                            console.log()
+                            this.$message.error('错了哦，网络错误！请联系管理员', res);
+                        })
+
+
+                },
+                handleCurrentChange1(val) {
+                    {#alert(this.p_number)#}
+
+
+                    {#console.log(`当前页: ${val}`);#}
+                },
+
+                handleSizeChange1(val) {
+                    {#console.log(`每页 ${val} 条`);#}
+                    this.p_number = val;
+
+
+                },
+                // 时间转行
+                dateFormat_m(row, column, cellValue) {
+
+                    let date = new Date(cellValue)
+                    let y = date.getFullYear()
+                    let m = date.getMonth() + 1
+                    m = m < 10 ? ('0' + m) : m
+                    let d = date.getDate()
+                    d = d < 10 ? ('0' + d) : d
+                    {#let h = date.getHours()#}
+                    {#h = h < 10 ? ('0' + h) : h#}
+                    {#let M = date.getMinutes()#}
+                    {#M = M < 10 ? ('0' + M) : M#}
+                    {#let s = date.getSeconds()#}
+                    {#s = s < 10 ? ('0' + s) : s#}
+                    {#let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;#}
+                    let dateTime = y + '-' + m + '-' + d + ' ';
+
+                    return dateTime
+
+                },
+
+
+                // 字段显示过多 省略号
+                stateFormat(row, column, cellValue) {
+                    if (!cellValue) return ''
+                    if (cellValue.length > 10) {       //最长固定显示10个字符
+                        return cellValue.slice(0, 10) + '...'
+                    }
+                    return cellValue
+                },
+
+
+                // 查询数据
+                get_data() {
+
+                    axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+                    axios.post(BASE_URL + '/bidding/', {
+                        value_u: this.value_u,
+                        value_time: this.value_time,
+                        f_number: 1,
+                        p_number: this.p_number,
+                    })
+                        .then((res) => {
+                            this.tableData = res.data.data_list
+                            this.count_t = res.data.count_t
+                            console.log(res.data)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                },
+
+
+                // excel 表下载
+                exportExcel() {
+                    if (this.d_status === 0) {
+                        this.$message.error('亲~ 在下载中不要重复点击呢！');
+
+                    } else {
+
+                        this.value_time_str = []
+                        for (let i in this.value_time) {
+
+                            let date = new Date(this.value_time[i])
+                            let y = date.getFullYear()
+                            let m = date.getMonth() + 1
+                            m = m < 10 ? ('0' + m) : m
+                            let d = date.getDate()
+                            d = d < 10 ? ('0' + d) : d
+                            let h = date.getHours()
+                            h = h < 10 ? ('0' + h) : h
+                            let M = date.getMinutes()
+                            M = M < 10 ? ('0' + M) : M
+                            let s = date.getSeconds()
+                            s = s < 10 ? ('0' + s) : s
+                            let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
+                            this.value_time_str.push(dateTime)
+                        }
+
+                        axios({
+                            method: 'post',
+                            url: BASE_URL + '/bidding/download/',
+                            data: {
+                                value_u: this.value_u,
+                                value_time: this.value_time_str,
+                            },
+                            responseType: 'blob',
+                        })
+                            .then((res) => {
+                                this.d_status = 1
+                                const filename = res.headers["content-disposition"];
+                                const blob = new Blob([res.data]);
+                                var downloadElement = document.createElement("a");
+                                var href = window.URL.createObjectURL(blob);
+                                downloadElement.href = href;
+                                downloadElement.download = decodeURIComponent(filename.split("filename=")[1]);
+                                document.body.appendChild(downloadElement);
+                                downloadElement.click();
+                                document.body.removeChild(downloadElement);
+                                window.URL.revokeObjectURL(href);
+
+
+                                {#console.log(res.data)#}
+                            })
+                            .catch((err) => {
+                                this.d_status = 1
+                                console.log(err.data)
+                            })
+                    }
+                },
+
+
+                // 词汇库选择
+                change_word_v() {
+                    axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+                    axios.post(BASE_URL + '/bidding/word/', {
+                        word_v: this.word_v,
+
+
+                    })
+                        .then((res) => {
+                            console.log(res.data)
+
+                            this.table1Data = res.data;
+                            let word_str = []
+                            for (let i = 0; i < this.table1Data.length; i++) {
+
+                                word_str.push(this.table1Data[i]['name'])
+                            }
+                            this.data_word = {'word_str': JSON.stringify(word_str)};
+                            {#this.count_t = res.data.count_t;#}
+                            {#this.tables_name = res.data.tables_name#}
+                            {#alert(this.count_t)#}
+
+                        })
+                        .catch((err) => {
+                            console.log(err)
+
+                        })
+                },
+
+                // 删除行
+                deleteRow(index, rows) {
+
+                    let a = this.table1Data.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))
+
+
+                    let a_index = this.table1Data.indexOf(a[index])
+
+                    rows.splice(a_index, 1);
+                    let word_str = []
+                    for (let i = 0; i < this.table1Data.length; i++) {
+
+                        word_str.push(this.table1Data[i]['name'])
+                    }
+                    this.data_word = {'word_str': JSON.stringify(word_str), 'word_v': this.word_v};
+                },
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                },
+                // 表格方法操作
+                // 选中第几行的方法
+                toggleSelection(rows) {
+                    if (rows) {
+                        rows.forEach(row => {
+                            this.$refs.multipleTable.toggleRowSelection(row);
+                        });
+                    } else {
+                        this.$refs.multipleTable.clearSelection();
+                    }
+                },
+                // 删除选中的方法
+                toggleremove() {
+
+                    {#console.log(this.multipleSelection)#}
+                    {#this.table1Data.splice(1,1);#}
+                    {#this.multipleSelection.sort().reverse();#}
+
+
+
+                    {#console.log(this.multipleSelection)#}
+                    let table_data = []
+                    {#console.log(this.multipleSelection)#}
+                    {#alert(this.multipleSelection)#}
+                    for (i in this.table1Data) {
+                        {#console.log(this.table1Data[i].id)#}
+
+
+                        {#console.log(this.table1Data.id + this.multipleSelection )#}
+                        if (this.multipleSelection.includes(this.table1Data[i].id)) {
+                            {#console.log(this.table1Data[i].id)#}
+
+                        } else {
+                            {#console.log(this.table1Data[i].id)#}
+                            table_data.push(this.table1Data[i])
+                        }
+
+                        {#console.log(this.multipleSelection,1)#}
+                    }
+                    console.log(table_data)
+                    this.table1Data = table_data
+                    let word_str = []
+                    for (let i = 0; i < this.table1Data.length; i++) {
+
+                        word_str.push(this.table1Data[i]['name'])
+                    }
+                    this.data_word = {'word_str': JSON.stringify(word_str), 'word_v': this.word_v};
+
+                },
+
+                handleSelectionChange(val, index) {
+                    {#console.log(val)#}
+                    let val1 = []
+                    val.forEach((alert) => {
+                        {#console.log(alert)#}
+                        {#console.log(alert.id)#}
+                        val1.push(alert.id);
+
+                    })
+
+
+                    this.multipleSelection = val1;
+
+                    {#console.log(this.multipleSelection)#}
+                },
+
+                tableRowClassName(row) {
+                    //设置row对象的index
+                    row.row.index = row.rowIndex;
+                },
+
+                // 拆分字符串，添加到词汇列表里
+                data_word_change() {
+                    console.log(this.word_v)
+                    {#alert(this.textarea2)#}
+                    let a = this.textarea2
+                    let v = a.split('、')
+                    let id_list = []
+                    let name_list = []
+                    for (let i = 0; i < this.table1Data.length; i++) {
+                        id_list.push(this.table1Data[i]['id'])
+                    }
+                    for (let i = 0; i < this.table1Data.length; i++) {
+                        name_list.push(this.table1Data[i]['name'])
+                    }
+                    max_id_list = id_list.sort().reverse()[0]
+
+
+                    for (let i = 0; i < v.length; i++) {
+
+                        if (name_list.includes(v[i]) || !(Boolean(v[i]))) {
+
+                        } else {
+                            name_list.push(v[i])
+                            this.table1Data.push({id: max_id_list + i + 1, name: v[i]})
+                        }
+
+                    }
+                    let word_str = []
+                    for (let i = 0; i < this.table1Data.length; i++) {
+
+                        word_str.push(this.table1Data[i]['name'])
+                    }
+                    this.data_word = {'word_str': JSON.stringify(word_str), 'word_v': this.word_v};
+
+
+                    {#alert(this.data_word['word_str'])#}
+                },
+                // 清空上传文件列表
+                clearFiles() {
+                    this.$refs['my-upload'].clearFiles();
+                    this.tableData = [];
+                    this.id_max = 0
+                },
+
+                // 文件上传之前的钩子
+                beforeAvatarUpload(file) {
+                    {#this.$refs['my-upload'].clearFiles();#}
+                    console.log(this.table1Data.length)
+                    let word_str = []
+                    for (let i = 0; i < this.table1Data.length; i++) {
+
+                        word_str.push(this.table1Data[i]['name'])
+                    }
+                    console.log(word_str)
+
+
+                    this.data_word = {'word_str': JSON.stringify(word_str), 'word_v': this.word_v}
+                    console.log(this.data_word)
+                    return true
+
+                },
+
+                // 上传完文件，反回的数据
+                handleAvatarSuccess(res, file) {
+                    console.log(res)
+
+                    // 解决id重名问题
+                    for (let r = 0; r < res.length; r++) {
+                        this.id_max += 1
+                        res[r]['id'] = this.id_max
+                        for (let c = 0; c < res[r]['children'].length; c++) {
+                            this.id_max += 1
+                            res[r]['children'][c]['id'] = this.id_max
+                            console.log(res[r]['children'][c]['id'])
+                        }
+
+
+                    }
+                    let c = this.tableData.concat(res);  // 连接两个或多个数组。
+                    this.tableData = c
+                    console.log(this.tableData)
+
+                },
+                handleAvatarError(res, file) {
+                    this.$message.error(res);
+                },
+
+
+                handleCurrentChange(val) {
+                    {#alert(this.p_number)#}
+
+                    {#console.log(`当前页: ${val}`);#}
+                }
+
+
+            }
+        })
+    </script>
+    <style>
+        button {
+            outline: none;
+        }
+    </style>
+    <style scoped>
+        .el-input {
+            width: 300px;
+        }
+
+        .el-descriptions__body {
+            color: #606266;
+            background-color: rgba(109, 255, 198, 0);
+        }
+
+        .box {
+
+
+            margin: 20px auto;
+
+            display: -webkit-flex;
+
+            display: flex;
+
+            -webkit-flex-wrap: wrap;
+
+            flex-wrap: wrap;
+
+        }
+
+        .box-content {
+            height: 60px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .el-col {
+            border-radius: 4px;
+        }
+
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+
+        .bg-purple {
+            background: #d3dce6;
+        }
+
+        .bg-purple-light {
+            background: #e5e9f2;
+        }
+
+        .grid-content {
+            border-radius: 4px;
+            min-height: 36px;
+        }
+
+        .row-bg {
+            padding: 10px 0;
+            background-color: #f9fafc;
+        }
+
+
+        .font_p {
+            font-family: KaiTi
+
+        }
+
+        .font_p:hover {
+            color: black;
+        }
+
+        .el-input__inner {
+
+            border-radius: 45px !important;
+            border-color: white;
+            box-shadow: 0px 0px 10px #F3F3F3FF;
+
+        }
+
+        .el-upload {
+        / / 这是上传图片父容器。 border: 1 px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+
+        .el-tabs__item:focus {
+            outline: none;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function () {
+
+            function doSomething() {
+                $('#main-wrapper').attr('data-sidebartype', 'mini-sidebar').attr('class', 'mini-sidebar');
+            }
+
+            var setTime = setTimeout(function () {
+                doSomething()
+            }, 300);
+        });
+
+    </script>
+
+{% endblock %}
+

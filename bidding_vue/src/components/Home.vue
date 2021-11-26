@@ -6,7 +6,7 @@
 
 
 
-    <div class="WordArt" style="height: 8000px;"></div>
+<!--    <div class="WordArt" style="height: 8000px;"></div>-->
 
 
   </div>
@@ -37,8 +37,8 @@ export default {
 
 <style scoped>
 /* scoped  */
-h1{
-  color:red;
-}
+/*h1{*/
+/*  color:red;*/
+/*}*/
 
 </style>

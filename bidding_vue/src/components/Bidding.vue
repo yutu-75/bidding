@@ -1,112 +1,153 @@
 <template>
-  <div style="height: 300px;background-color: #f9fbfd">
+  <div style="height: 300px;background-color: #f9fbfd; ">
 
-    <div style="height: 80px;"> </div>
+    <div style="height: 80px;"></div>
 
+    <!--
+        <div class="row" style="margin: 30px;">
+          <div class="col-xs-6 col-sm-3">
+            <div class="grid-content bg-purple">
+              <div class="grid-content bg-purple-dark">
+                <h3 class="page-title text-truncate text-dark font-weight-medium mb-1" style="margin-left: 15px;"> 招标信息</h3>
+                <div class="d-flex align-items-center">
+                  <nav aria-label="breadcrumb" style="width: 150px;">
+                    <ol class="breadcrumb m-0 p-0">
+                      <li class="breadcrumb-item"><a href="/" class="text-muted">首页</a></li>
 
-    <div class="row" style="margin: 30px;">
-      <div class="col-xs-6 col-sm-3">
-        <div class="grid-content bg-purple">
-          <div class="grid-content bg-purple-dark">
-            <h3 class="page-title text-truncate text-dark font-weight-medium mb-1" style="margin-left: 15px;"> 招标信息</h3>
-            <div class="d-flex align-items-center">
-              <nav aria-label="breadcrumb" style="width: 150px;">
-                <ol class="breadcrumb m-0 p-0">
-                  <li class="breadcrumb-item"><a href="/" class="text-muted">首页</a></li>
+                      <li class="breadcrumb-item text-muted active"
+                          aria-current="page">招标信息
+                      </li>
 
-                  <li class="breadcrumb-item text-muted active"
-                      aria-current="page">招标信息
-                  </li>
-
-                </ol>
-              </nav>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-        <div class="row" style="margin: 30px;">
 
-  <div class="">
+    -->
+    <div class="row" style="margin: 30px;">
 
-         <div class="row" >
-
-
-           <div class="col-md-6">
-             <div class="box-content" >
-            <span> 网站选择:  </span>
-            <el-select
-              v-model="value_u"
-              multiple
-              filterable
-              collapse-tags
-
-              style="margin-left: 20px; width: 300px;"
-              placeholder="请选择">
-              <el-option
-
-                v-for="item in options_u"
-                @click.native="all_get(item.value)"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-
-          </div></div>
-  <div class="col-md-5">        <div class="box-content" style="height: 70px">
-            <span> 时间选择:  </span>
+      <div class="">
+        <el-card class="box-card">
 
 
-            <el-date-picker
-              v-model="value_time"
-              type="datetimerange"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              :picker-options="pickerOptions"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              align="right">
-            </el-date-picker>
+          <el-row :gutter="10">
+            <el-col :xs="24" :sm="12" :md="9" :lg="7" :xl="6">
+              <div class="box-content">
+                <span> 网站选择: </span>
+                <el-select
+                  v-model="value_u"
+                  multiple
+                  filterable
+                  collapse-tags
+                  style=" width: 300px;"
+                  placeholder="请选择">
+                  <el-option
+                    v-for="item in options_u"
+                    @click.native="all_get(item.value)"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
 
-          </div></div>
-           <div class="col-md-4">          <div class="box-content" style="width:350px;height: 60px">
-
-            <el-input
-
-              :rows="2"
-              placeholder="请输入关键字以 ,，、 (英文逗号 中文逗号 中文顿号)符号隔开"
-              v-model="key_word">
-            </el-input>
-          </div></div>
-  <div class="col-md-4">          <div class="box-content" style="height:50px; margin-left: 50px;line-height: 30px ">
-            <el-button @click="get_data">查询</el-button>
-          </div></div>
-
-
-
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="9" :lg="7" :xl="6">
+              <div class="box-content">
+                <span> 时间选择:  </span>
 
 
-          </div>
+                <el-date-picker
+                  v-model="value_time"
+                  type="datetimerange"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :picker-options="pickerOptions"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  style="width:300px"
+                  end-placeholder="结束日期"
+                  align="right">
+                </el-date-picker>
+
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="9" :lg="7" :xl="6">
+              <div class="box-content">
+                <span> 关&nbsp 键 &nbsp字: </span>
+                <el-input
+
+                  :rows="2"
+                  placeholder="请输入关键字以 ,，、 (英文逗号 中文逗号 中文顿号)符号隔开"
+                  style=" width: 300px;"
+                  v-model="key_word">
+                </el-input>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="9" :lg="7" :xl="6">
+              <div class="box-content">
+                <span> 客户名称:  </span>
+                <el-input
+
+                  :rows="2"
+                  placeholder="请输入关键字客服名称,本查询采用模糊匹配！"
+                  style=" width: 300px;"
+                  v-model="customer_name">
+                </el-input>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="9" :lg="7" :xl="6">
+              <div class="box-content">
+                <span> 招标金额:</span>
+                <div style="display:inline-table;">
+                  <el-input-number v-model="min" style="width: 144px;" :controls=false
+                                   controls-position="top"></el-input-number>
+                  ~
+                  <el-input-number v-model="max" style="width: 144px;" :controls=false
+                                   controls-position="top"></el-input-number>
+                </div>
+
+
+              </div>
+
+            </el-col>
+
+            <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+
+              <div class="box-content">
+                <el-button @click="get_data">查询</el-button>
+              </div>
+
+            </el-col>
+
+          </el-row>
+          <p style="margin-top: 10px;color: #bebebe"> 由于招标信息内容里金额单位不统一,金额信息可能为中文数字等问题 <code>招标金额</code> 暂处于开发中...</p>
+
+        </el-card>
+
         <hr>
-        <p style="height: 40px"></p>
+
         <div class="row">
           <div class="col-lg-12">
 
-            <div class="card">
+            <el-card class="box-card">
+
               <div class="card-body">
 
 
-                <div id="bar" style="width: calc(100% - 55px); height:800px;">
+                <div id="bar" style="width: calc(100% - 55px); height:730px;">
 
 
                   <h4 class="card-title">招标信息表格
                     <div class="float-right" style="float:right;">
-<!--                      <el-button @click="exportExcel">导出</el-button>-->
+                      <el-button @click="exportExcel">导出</el-button>
 
 
-                      <a  class="el-button el-button--default" :href="a_url+'?value_u='+value_u+'&value_time='+value_time">
-                        导出</a>
+                      <!--                      <a style="text-decoration:none;" class="el-button el-button&#45;&#45;default"-->
+                      <!--                         :href="this.$settings.Host +'?value_u='+value_u+'&value_time='+value_time">-->
+                      <!--                        导出</a>-->
 
 
                     </div>
@@ -115,7 +156,7 @@
                   </h6>
 
 
-                  <template >
+                  <template>
                     <el-table
                       id="aa"
                       :data="tableData"
@@ -124,11 +165,7 @@
                       stripe
                       row-key='id'
                       default-expand-all:false
-
-
                       :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-
-
                       <el-table-column
                         type="index"
                         label="序号"
@@ -170,8 +207,9 @@
                       >
                       </el-table-column>
                       <el-table-column
+                        sortable
                         prop="b_money"
-                        width="100"
+                        width="110"
                         label="招标金额">
                       </el-table-column>
                       <el-table-column
@@ -192,7 +230,7 @@
                       </el-table-column>
 
                       <el-table-column
-                        prop="collect_id"
+                        prop="collect__web_name"
                         width="200"
                         label="来源网站名">
                       </el-table-column>
@@ -200,27 +238,24 @@
                   </template>
 
 
- <div style="margin: 20px">
+                  <div style="margin: 20px">
 
-                                <el-pagination
-                    background
-                    @size-change="handleSizeChange1"
-                    @current-change="handleCurrentChange1"
-                    :current-page="currentPage4"
-                    :page-sizes="[10, 100, 200, 300, 400]"
-                    :page-size="10"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total='count_t'>
-                  </el-pagination>
+                    <el-pagination
+                      background
+                      @size-change="handleSizeChange1"
+                      @current-change="handleCurrentChange1"
+                      :current-page="currentPage4"
+                      :page-sizes="[10, 100, 200, 300, 400]"
+                      :page-size="10"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total='count_t'>
+                    </el-pagination>
+                  </div>
                 </div>
-                </div>
-
-
 
 
               </div>
-
-            </div>
+            </el-card>
           </div>
 
           <div class="col-lg-4">
@@ -307,15 +342,10 @@
         </div>
       </div>
 
-  </div>
-
-
+    </div>
 
 
     <div class="page-wrapper">
-
-
-
 
 
     </div>
@@ -326,10 +356,18 @@
 </template>
 
 <script>
+// import {SelectData} from "../api";
+import {SelectData} from '@/api/index';
+
 export default {
   name: "Bidding",
   data() {
     return {
+      min: '',
+      max: '',
+      customer_name: '',
+
+
       value_u: [],
       // 网站选择
       options_u: [
@@ -381,7 +419,8 @@ export default {
         }, {
           value: '15',
           label: '神农架林区政府采购'
-        }],
+        }
+      ],
       value_time: '',
       // 日期选择
       pickerOptions: {
@@ -420,43 +459,46 @@ export default {
         }]
       },
       key_word: '',
-      a_url:   '/bidding/download/',
+      a_url: '/bidding/download/',
       tableData: [],
       currentPage4: 1,        // 页数
-              count_t: 0,             // 数据总数
+      count_t: 0,             // 数据总数
+
+      p_number: 10,
+
     }
   },
   methods: {
-        // 时间转行
+    // 时间转行
     dateFormat_m(row, column, cellValue) {
 
-        let date = new Date(cellValue)
-        let y = date.getFullYear()
-        let m = date.getMonth() + 1
-        m = m < 10 ? ('0' + m) : m
-        let d = date.getDate()
-        d = d < 10 ? ('0' + d) : d
+      let date = new Date(cellValue)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? ('0' + m) : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
 
-        // let h = date.getHours()
-        // h = h < 10 ? ('0' + h) : h
-        // let M = date.getMinutes()
-        // M = M < 10 ? ('0' + M) : M
-        // let s = date.getSeconds()
-        // s = s < 10 ? ('0' + s) : s
-        // let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
+      // let h = date.getHours()
+      // h = h < 10 ? ('0' + h) : h
+      // let M = date.getMinutes()
+      // M = M < 10 ? ('0' + M) : M
+      // let s = date.getSeconds()
+      // s = s < 10 ? ('0' + s) : s
+      // let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
 
-        let dateTime = y + '-' + m + '-' + d + ' ';
+      let dateTime = y + '-' + m + '-' + d + ' ';
 
-        return dateTime
+      return dateTime
 
     },
     // 字段显示过多 省略号
     stateFormat(row, column, cellValue) {
-        if (!cellValue) return ''
-        if (cellValue.length > 10) {       //最长固定显示10个字符
-            return cellValue.slice(0, 10) + '...'
-        }
-        return cellValue
+      if (!cellValue) return ''
+      if (cellValue.length > 10) {       //最长固定显示10个字符
+        return cellValue.slice(0, 10) + '...'
+      }
+      return cellValue
     },
 
     all_get(val) {
@@ -485,115 +527,152 @@ export default {
     },
     // 查询数据
     get_data() {
-
-      axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
-      axios.post(BASE_URL + '/bidding/', {
+      let data_send = {
         value_u: this.value_u,
         value_time: this.value_time,
         f_number: 1,
         p_number: this.p_number,
         key_word: this.key_word,
-      })
-        .then((res) => {
-          this.tableData = res.data.data_list
-          this.count_t = res.data.count_t
-          console.log(res.data)
+        customer_name: this.customer_name,
+      }
+      let token_s1 = sessionStorage.token || localStorage.token
+      SelectData({data: data_send,headers:{'Authorization':'jwt ' + token_s1}})
+        .then((data) => {
+          // console.log(data)
+          // console.log(data.data.token)
+          // console.log(data.data.username);
+          this.tableData = data.data.data_list;
+
+          this.count_t = data.data.count_t;
+          // console.log(data.data);
+          if (data.data.data_list.length < 1) {
+            this.$message({
+              message: '亲~  没有查询到数据呢！',
+              type: 'error',
+              offset: 100
+            });
+
+          }
         })
         .catch((err) => {
-          this.$message.error(err.data);
-          console.log(err)
-        })
+          this.$message({
+            message: err.data,
+            type: 'error',
+            offset: 100
+          });
+        });
     },
-        // excel 表下载
+    // excel 表下载
     exportExcel() {
-        if (this.d_status === 0) {
-            this.$message.error('亲~ 在下载中不要重复点击呢！');
-
-        } else {
-            this.d_status = 0
-
-            this.value_time_str = []
-            for (let i in this.value_time) {
-
-                let date = new Date(this.value_time[i])
-                let y = date.getFullYear()
-                let m = date.getMonth() + 1
-                m = m < 10 ? ('0' + m) : m
-                let d = date.getDate()
-                d = d < 10 ? ('0' + d) : d
-                let h = date.getHours()
-                h = h < 10 ? ('0' + h) : h
-                let M = date.getMinutes()
-                M = M < 10 ? ('0' + M) : M
-                let s = date.getSeconds()
-                s = s < 10 ? ('0' + s) : s
-                let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
-                this.value_time_str.push(dateTime)
-            }
-
-            axios({
-                method: 'post',
-                url: BASE_URL + '/bidding/download/',
-                data: {
-                    value_u: this.value_u,
-                    value_time: this.value_time_str,
-                    key_word: this.key_word,
-                },
-                responseType: 'blob',
-            })
-                .then((res) => {
-                    this.d_status = 1
-                    const filename = res.headers["content-disposition"];
-                    const blob = new Blob([res.data]);
-                    var downloadElement = document.createElement("a");
-                    var href = window.URL.createObjectURL(blob);
-                    downloadElement.href = href;
-                    downloadElement.download = decodeURIComponent(filename.split("filename=")[1]);
-                    document.body.appendChild(downloadElement);
-                    downloadElement.click();
-                    document.body.removeChild(downloadElement);
-                    window.URL.revokeObjectURL(href);
+      if (this.d_status === 0) {
+        this.$message({
+          message: '亲~ 在下载中不要重复点击呢！',
+          type: 'error',
+          offset: 100
+        });
 
 
-                    console.log(res.data)
-                })
-                .catch((err) => {
-                    this.$message.error('亲~ 没有数据呢！看看能不能查询到数据，查到数据无法导出请联系管理员！');
-                    this.d_status = 1
+      } else {
+        this.d_status = 0
 
-                })
+        this.value_time_str = []
+        for (let i in this.value_time) {
+
+          let date = new Date(this.value_time[i])
+          let y = date.getFullYear()
+          let m = date.getMonth() + 1
+          m = m < 10 ? ('0' + m) : m
+          let d = date.getDate()
+          d = d < 10 ? ('0' + d) : d
+          let h = date.getHours()
+          h = h < 10 ? ('0' + h) : h
+          let M = date.getMinutes()
+          M = M < 10 ? ('0' + M) : M
+          let s = date.getSeconds()
+          s = s < 10 ? ('0' + s) : s
+          let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
+          this.value_time_str.push(dateTime)
         }
+
+        let data_send = {
+          value_u: this.value_u,
+          value_time: this.value_time,
+          f_number: 1,
+          p_number: this.p_number,
+          key_word: this.key_word,
+          customer_name: this.customer_name,
+          download: 'ture',
+
+        }
+
+        SelectData(
+          {data: data_send, responseType: 'blob'},
+        )
+          .then((data) => {
+
+
+            this.d_status = 1
+            const filename = data.headers["content-disposition"];
+            const blob = new Blob([data.data]);
+            var downloadElement = document.createElement("a");
+            var href = window.URL.createObjectURL(blob);
+            downloadElement.href = href;
+            // alert('5')
+
+            downloadElement.download = decodeURIComponent(filename.split("filename=")[1]);
+            document.body.appendChild(downloadElement);
+            downloadElement.click();
+            document.body.removeChild(downloadElement);
+            window.URL.revokeObjectURL(href);
+
+          })
+          .catch((err) => {
+            this.$message({
+              message: '亲~ 没有数据呢！看看能不能查询到数据，查到数据无法导出请联系管理员！',
+              type: 'error',
+              offset: 100
+            });
+
+            this.d_status = 1
+
+          })
+      }
     },
 
     handleCurrentChange1(val) {
-    // alert(this.p_number)
-    axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+      // alert(this.p_number)
 
-    axios.post(BASE_URL + '/bidding/', {
+
+      let data_send = {
         value_u: this.value_u,
         value_time: this.value_time,
         f_number: val,
         p_number: this.p_number,
         key_word: this.key_word,
+        customer_name: this.customer_name,
+      }
 
-    })
-        .then((res) => {
-            this.tableData = res.data.data_list
-            this.count_t = res.data.count_t
-
-
+      SelectData(
+        {data: data_send}
+      )
+        .then((data) => {
+          console.log(data)
+          // console.log(data.data.token)
+          // console.log(data.data.username);
+          this.tableData = data.data.data_list
+          this.count_t = data.data.count_t
+          console.log(data.data)
         })
-        .catch((res) => {
-            this.$message.error(err.data);
+        .catch((err) => {
+          console.log(err.data);
+        });
 
-        })
-
-    console.log(`当前页: ${val}`);
-},
+      console.log(`当前页: ${val}`);
+    },
 
     handleSizeChange1(val) {
-        console.log(`每页 ${val} 条`);
-        this.p_number = val;
+      console.log(`每页 ${val} 条`);
+      this.p_number = val;
 
 
     },
@@ -602,19 +681,37 @@ export default {
 </script>
 
 <style scoped>
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid #e9ecef;
-    border-radius: 0.25rem;
+
+
+>>> .el-range-separator {
+  width: 20px;
 }
-#bar{
+
+>>> .el-input__inner {
+  /*border-radius: 60px;*/
+}
+
+a {
+  text-decoration: none;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid #e9ecef;
+  border-radius: 0.25rem;
+}
+
+#bar {
   margin: 30px;
 }
 
+.box-content {
+  padding: 4px 0;
+}
 </style>

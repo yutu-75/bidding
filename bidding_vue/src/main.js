@@ -6,7 +6,7 @@ import router from './router'
 import animated from 'animate.css'
 import $ from 'jquery'
 
-
+import settings from "./settings";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -22,7 +22,7 @@ import 'element-ui/lib/theme-chalk/index.css';  // 需要import引入一下css�
 Vue.use(ElementUI);
 
 
-
+Vue.prototype.$settings = settings;
 
 /* eslint-disable no-new */
 new Vue({

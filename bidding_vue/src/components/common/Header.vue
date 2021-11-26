@@ -23,8 +23,9 @@
           </button>
           <div class="site-branding">
           <span class="site-title">
-          <span class="logolink moe-mashiro">
-            <router-link to='/'  alt="津久见的白猫">
+            <span class="logolink moe-mashiro"><a href="/"><img src="@/assets/logo1.png" alt="">  <span class="shironeko"> 招标信息</span></a> </span>
+          <span class="logolink moe-mashiro" v-show="false">
+            <router-link to='/' alt="津久见的白猫">
               <ruby>
                 <span class="sakuraso"> bidding  </span>
                 <span class="no">❄</span>
@@ -33,7 +34,7 @@
                 <rt class="chinese-font">招标信息</rt>
                 <rp></rp>
               </ruby>
-            </router-link >
+            </router-link>
           </span> </span>
           </div>
 
@@ -64,16 +65,29 @@
 
           <div class="header-user-avatar">
 
-            <div class="nav-item dropdown" v-show="true">
+            <div class="register" v-show="!token">
+              <router-link to="/login">
+                <button class="signin">登录</button>
+              </router-link>
+              <!--                &nbsp;&nbsp;|&nbsp;&nbsp;-->
+              <a target="_blank" href="#">
+                <router-link to="/register">
+                  <!--                    <button class="signup">注册</button>-->
+                </router-link>
 
-              <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+              </a>
+            </div>
+
+            <div class="nav-item dropdown" v-show="token">
+
+              <a style="text-decoration:none;" class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false">
-                <img id='img_avatar' src="/static/images/users/touxiang.png" alt="user"
+                <img id='img_avatar' :src="avatar" alt="user"
                      class="rounded-circle"
                      width="40">
                 <span class="ml-2 d-none d-lg-inline-block"><span>你好鸭！,</span> <span
-                  class="text-dark">qwq</span> <i data-feather="chevron-down"
-                                                  class="svg-icon"></i></span>
+                  class="text-dark">{{ username }}</span> <i data-feather="chevron-down"
+                                                             class="svg-icon"></i></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                 <!--            <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"-->
@@ -88,27 +102,28 @@
                 <div class="dropdown-divider"></div>
                 <router-link to='userconfig' class="dropdown-item"><i data-feather="settings"
                                                                       class="svg-icon mr-2 ml-1"></i>
-                  账户设置</router-link>
+                  账户设置
+                </router-link>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/bidding/logout/"><i data-feather="power"
-                                                                    class="svg-icon mr-2 ml-1"></i>
+                <a class="dropdown-item" href="#" @click="loginout"><i data-feather="power"
+                                                                         class="svg-icon mr-2 ml-1"></i>
                   注销</a>
                 <div class="dropdown-divider"></div>
                 <!--            <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">查看资料 开发中....</a>-->
                 <!--            </div>-->
               </div>
             </div>
-            <div  v-show="false">
-                          <a href="/">
-              <img class="faa-shake animated-hover"
-                   src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png"
-                   width="30" height="30"> </a>
-            <div class="header-user-menu" >
-              <div class="herder-user-name no-logged">Whether to <a href="https://2heng.xin/login/" target="_blank"
-                                                                    style="color:#333;font-weight:bold;text-decoration:none">log
-                in</a> now?
+            <div v-show="false">
+              <a href="/">
+                <img class="faa-shake animated-hover"
+                     src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png"
+                     width="30" height="30"> </a>
+              <div class="header-user-menu">
+                <div class="herder-user-name no-logged">Whether to <a href="https://2heng.xin/login/" target="_blank"
+                                                                      style="color:#333;font-weight:bold;text-decoration:none">log
+                  in</a> now?
+                </div>
               </div>
-            </div>
             </div>
 
           </div>
@@ -126,7 +141,12 @@ export default {
   name: 'Header',
   data() {
     return {
-      screenHeight: '', // 浏览器窗口高度
+
+      token: null,
+      username: '',
+      avatar:this.$settings.Host+'/static/avatar/touxiang.png',
+            screenHeight: '', // 浏览器窗口高度
+
       msg: 'Welcome to Your Vue.js App',
       // c_top:"cd-top faa-float animated",
       s_top: 'top: ' + (document.documentElement.clientHeight - 900).toString() + 'px',
@@ -137,8 +157,23 @@ export default {
         width: '0%',
         background: "orange",
       },
-      class_header: 'navbar navbar-default site-header no-select is-homepage gizle sabit', //
+      class_header: 'navbar navbar-default site-header no-select is-homepage gizle yya', //
     }
+  },
+  created() {
+
+    this.token = sessionStorage.token || localStorage.token;
+    this.username = sessionStorage.username || localStorage.username;
+    // this.$settings.avatar = this.$settings.Host+ '/static/' + (sessionStorage.avatar || localStorage.avatar);
+
+          if (sessionStorage.avatar || localStorage.avatar){
+            this.avatar = sessionStorage.avatar || localStorage.avatar
+          }
+    console.log(!this.token)
+    if (!this.token){
+      this.$router.push('/login');
+    }
+
   },
   mounted() {
 
@@ -151,6 +186,19 @@ export default {
 
   },
   methods: {
+    // 退出登录
+    loginout() {
+      localStorage.removeItem('token');//
+      localStorage.removeItem('username');//
+      localStorage.removeItem('id');//
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('id');
+      this.token = false
+      this.$router.push('/login');
+
+    },
+
     event_qwq() {
 
 
@@ -170,7 +218,10 @@ export default {
         this.class_header = 'navbar navbar-default site-header no-select is-homepage gizle yya'
       } else {
         this.s_top = 'top: ' + (this.screenHeight - 900).toString() + 'px'
-        this.class_header = 'navbar navbar-default site-header no-select is-homepage gizle sabit'
+
+                 // 原隐藏样式
+                // this.class_header = 'navbar navbar-default site-header no-select is-homepage gizle sabit'
+        this.class_header = 'navbar navbar-default site-header no-select is-homepage gizle yya'
       }
 
 
@@ -193,9 +244,7 @@ export default {
           } else {
             this.s_top = 'top: ' + (this.screenHeight - 900).toString() + 'px'
             console.log('top: ' + (this.screenHeight - 900).toString() + 'px')
-
           }
-
         })();
       };
 
@@ -275,6 +324,17 @@ function scrollBar() {
   height: 75px;
 }
 
+.register .signin, .register .signup {
+  font-size: 14px;
+  border: none;
+  background-color: rgba(109, 255, 198, 0);
+  color: #5e5e5e;
+  white-space: nowrap;
+}
+
+.signup :hover {
+  color: red;
+}
 
 .nav {
   border: 0;
@@ -298,12 +358,12 @@ function scrollBar() {
   border: 0;
 
 }
-
+/* logo 鼠标悬浮阴影 */
 .top > nav:hover {
   position: fixed;
   left: 0;
   background: rgba(255, 255, 255, .95);
-  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .5)
+  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .2)
 }
 
 .navbar .navbar-default .site-header .no-select .is-homepage .gizle .sabit :hover {
@@ -362,13 +422,13 @@ function scrollBar() {
   position: absolute;
   width: 110px;
   right: -11px;
-  text-align: left;
+  /*text-align: left;*/
   background: 0 0;
   top: 44px;
   display: none;
   overflow: hidden;
   animation: header-user-menu .4s;
-  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .5);
+  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .2);
   border-radius: 5px;
   text-align: center
 }
@@ -378,7 +438,7 @@ function scrollBar() {
   padding: 6px 10px;
   margin: 2px 0;
   width: 110px;
-  text-align: left;
+
   color: #333;
   font-size: 13px;
   text-align: center
@@ -512,14 +572,14 @@ function scrollBar() {
   width: auto
 }
 
-.logolink a:hover .sakuraso {
-  background-color: orange;
-  color: #fff
-}
-
-.logolink a:hover .shironeko, .logolink a:hover rt {
-  color: orange
-}
+/* 动态logo悬浮变色 */
+/*.logolink a:hover .sakuraso {*/
+/*  background-color: orange;*/
+/*  color: #fff*/
+/*}*/
+/*.logolink a:hover .shironeko, .logolink a:hover rt {*/
+/*  color: orange*/
+/*}*/
 
 .logolink a:hover .no {
 
@@ -650,11 +710,13 @@ function scrollBar() {
   background-color: rgba(255, 255, 255, .5);
 }
 
+
+/* header头阴影 */
 .yya {
   position: fixed;
   left: 0;
   background: rgba(255, 255, 255, .95);
-  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .5)
+  box-shadow: 0 1px 40px -8px rgba(0, 0, 0, .2)
 }
 
 .dropdown-item {

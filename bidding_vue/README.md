@@ -28,5 +28,11 @@ npm install animate.css
 
 # 快速安装ElementUI
 npm install element-ui --save
+
+# 快速安装ElementUI
+npm install element-ui --save
+
+# 发请求插件axios
+npm install --save axios
 ```
 

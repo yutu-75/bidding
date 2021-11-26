@@ -4,149 +4,279 @@
     <Header></Header>
     <div style="height: 80px;"></div>
 
+    <div class="card_c" style="width:800px; margin-left: 20%;margin-top: 20px;">
+      <el-card class="box-card">
 
-    <div class="row" style="margin: 30px;">
-      <div class="col-xs-6 col-sm-3">
-        <div class="grid-content bg-purple">
-          <div class="grid-content bg-purple-dark">
-            <h3 class="page-title text-truncate text-dark font-weight-medium mb-1" style="margin-left: 15px;"> 招标信息</h3>
-            <div class="d-flex align-items-center">
-              <nav aria-label="breadcrumb" style="width: 180px;">
-                <ol class="breadcrumb m-0 p-0">
-                  <li class="breadcrumb-item"><a href="/" class="text-muted">首页</a></li>
+        <el-row :gutter="20"   style="height: 90px;">
+          <el-col :span="2">
+            <div class="" style="width:200px;line-height: 50px;margin-left: 40px;font-weight: 600">头像</div>
+          </el-col>
 
-                  <li class="breadcrumb-item text-muted active"
-                      aria-current="page">个人配置中心
-                  </li>
+          <el-col :span="5" :offset="2">
 
-                </ol>
-              </nav>
+            <div class="grid-content bg-purple" style="float: top">
+
+
+              <el-avatar :size="80" :src="avatar" style="background-color:rgba(190, 190, 190,0.2);margin-left: 60px" ></el-avatar>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" style="margin: 30px;">
+          </el-col>
+          <el-col :span="1">
+            <el-upload
+              class="upload-demo"
+              accept="image/jpeg,image/gif,image/png,image/jpg"
+              :action="this.$settings.Host+'/users/avatar/'"
+              :on-success="response_avatar"
+              :headers="myHeaders"
+              :show-file-list="false"
+              multiple
 
-      <div class="container-fluid">
+            >
+              <button class="el-button" style="width: 150px;margin-top: 20px;margin-left: 85px">更换头像</button>
+
+              <!--  <el-button size="small" type="primary">点击上传</el-button>-->
+
+            </el-upload>
 
 
-        <template>
+          </el-col>
+        </el-row>
 
 
-          <el-descriptions class="margin-top" title="个人配置显示" :column="3" :size="size">
-            <template slot="extra">
-              <el-button type="primary" size="small" @click="func_setting"><i
-                class="el-icon-edit-outline"> </i> 编辑
+        <div style="width: 500px;margin: 30px;">
+
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="150px"
+                   class="demo-ruleForm">
+            <el-form-item label="用户名" prop="username">
+              <el-input v-model="ruleForm.username" @input="change_u"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input placeholder="请输入密码" v-model="ruleForm.password" show-password @input="change_u"></el-input>
+
+            </el-form-item>
+
+            <el-form-item
+              prop="email"
+              label="邮箱"
+              :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]"
+            >
+              <el-input v-model="ruleForm.email" @input="change_u"></el-input>
+            </el-form-item>
+
+            <el-form-item
+              label="获取几天内数据"
+              prop="time_day"
+              :rules="[
+      { required: true, message: '获取几天内数据不能为空'},
+      { type: 'number', message: '获取几天内数据必须为数字值'}
+    ]"
+            >
+              <el-input type="age" v-model.number="ruleForm.time_day" autocomplete="off" @input="change_u"></el-input>
+            </el-form-item>
+
+            <el-form-item label="选择获取数据的网站" style="" prop="url_id">
+
+              <el-select
+                v-model="ruleForm.url_id"
+                multiple
+                filterable
+                collapse-tags
+                style="width: 100%;"
+                @change="change_u"
+
+                placeholder="请选择">
+                <el-option
+
+                  v-for="item in ruleForm.options_u"
+                  @click.native="all_get(item.value)"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="是否开启邮件发送" prop="delivery">
+              <el-switch v-model="ruleForm.state" @change="change_s"></el-switch>
+            </el-form-item>
+
+
+            <el-form-item label="关键字" prop="key_word">
+              <el-input v-model="ruleForm.key_word" :disabled="true"></el-input>
+            </el-form-item>
+
+
+            <el-form-item>
+              <el-button type="primary" :disabled="disabled" style="width: 200px;" @click="update_data()">
+                立即创建
               </el-button>
-            </template>
-
-            <el-descriptions-item label="用户名">{{ uname }}</el-descriptions-item>
-            <el-descriptions-item label="密码">{{ password }}</el-descriptions-item>
-            <el-descriptions-item label="邮箱">{{ email }}</el-descriptions-item>
-            <el-descriptions-item label="几天内的数据">{{ time_day }}</el-descriptions-item>
-
-            <el-descriptions-item label="网站选择">{{ url_id }}</el-descriptions-item>
-            <el-descriptions-item label="发送时间">{{ send_time }}</el-descriptions-item>
-            <el-descriptions-item label="邮件发送">{{ state }}</el-descriptions-item>
-            <el-descriptions-item label="关键字">
-              <p>{{ key_word }}</p>
-            </el-descriptions-item>
-
-          </el-descriptions>
-
-        </template>
-
-
-        <hr>
-
-
-        <div class="row" >
-
-
-          <div class="col-lg-8">
-
-
-            <div class="card" >
-              <div class="card-body" v-show="show_s" style="margin: 30px;">
-                <h4 class="card-title">请输入的修改的内容</h4>
-                <!--     <h6 class="card-subtitle">To use add <code>is-valid</code> class to the input</h6>  -->
-                <h6 class="card-subtitle">部分选项无法使用，还在调整中...</h6>
-                <form class="mt-3">
-
-
-                  <label class="form-control-label" >请输入需要更改的用户名</label>
-                  <input type="text" v-model="uname" class="form-control " id="uname">
-                  <label class="form-control-label">请输入需要更改的密码</label>
-                  <input type="text" v-model=password class="form-control " id="password">
-
-                  <label class="form-control-label" >请输入需要更改的邮箱</label>
-                  <input type="text" v-model=email class="form-control " id="email">
-                  <label class="form-control-label" >请选择要获取几天内的数据(必须为整数！)</label>
-                  <input type="text" v-model=time_day class="form-control " id="time_day">
-                  <label class="form-control-label" >请选择要获取需要获取数据的网站</label>
-                  <div class="box-content" style="margin-right: 20px;">
-
-                    <el-select
-                      v-model="url_id"
-                      multiple
-                      filterable
-                      collapse-tags
-                      style="margin-left: 20px;"
-                      placeholder="请选择">
-                      <el-option
-
-                        v-for="item in options_u"
-                        @click.native="all_get(item.value)"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                      </el-option>
-                    </el-select>
-
-                  </div>
-                  <!--
-                                                      <label class="form-control-label" for="inputSuccess1">请选择发送时间</label>
-                                                      <input type="text" v-model=send_time class="form-control " id="send_time">
-                  -->
-                  <label class="form-control-label" >选择是否开启邮件发送</label>
-                  <br>
-                  <el-switch
-                    v-model="state"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                  </el-switch>
-                  <br>
-                  <!-- <label class="form-control-label" for="inputSuccess1">请输入关键字并以,或者，隔开</label>-->
-                  <label class="form-control-label" >关键字</label>
-                  <input type="text" v-model=key_word class="form-control " id="key_word" disabled>
-
-
-                </form>
-                <div style="margin-top: 10px;">
-                  <el-button @click="update_data">提交</el-button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-
+              <!--              <el-button @click="resetForm('ruleForm')">重置</el-button>-->
+            </el-form-item>
+          </el-form>
         </div>
-      </div>
 
-
+      </el-card>
     </div>
   </div>
 </template>
 
 <script>
 import Header from '@/components/common/Header'
+import {GetUser, UpdateUser} from "../api";
+
+
 
 export default {
   name: "UserConfig",
   data() {
     return {
+
+      avatar: this.$settings.Host+'/static/avatar/touxiang.png',
+      myHeaders: {Authorization: 'jwt ' + (sessionStorage.token || localStorage.token)},
+
+      disabled: true,    // 判断表单数据是否变动
+
+
+      ruleForm1: {
+        username: 'qwq',
+        password: '123456',
+        time_day: '1',
+        email: 'xiao3952@foxmail.com',
+        state: false,
+        url_id: ['1', '2'],
+        key_word: '第三方、满意度、调查、统计、调研、检查、研究、咨询、巡查、普查、考核、测评、评估、绩效、创建、摸底、核查、入户、监测、社会救助、城市管理',
+        // 网站选择
+        options_u: [
+          {
+            value: '0',
+            label: '全部'
+          }, {
+            value: '1',
+            label: '中国政府采购公告'
+          }, {
+            value: '2',
+            label: '湖北省公共资源交易中心'
+          }, {
+            value: '3',
+            label: '宜昌市公共资源交易中心'
+          }, {
+            value: '4',
+            label: '武汉市政府采购信息发布系统'
+          }, {
+            value: '5',
+            label: '孝感政务服务和大数据管理局'
+          }, {
+            value: '6',
+            label: '黄冈市公共资源交易中心'
+          }, {
+            value: '7',
+            label: '随州政府采购'
+          }, {
+            value: '8',
+            label: '黄石市公共资源交易中心'
+          }, {
+            value: '9',
+            label: '十堰市公共资源交易中心'
+          }, {
+            value: '10',
+            label: '鄂州政府采购'
+          }, {
+            value: '11',
+            label: '荆门市公共资源交易中心'
+          }, {
+            value: '12',
+            label: '荆州市公共资源交易中心'
+          }, {
+            value: '13',
+            label: '咸宁市公共资源交易中心'
+          }, {
+            value: '14',
+            label: '恩施政府采购'
+          }, {
+            value: '15',
+            label: '神农架林区政府采购'
+          }],
+
+      },
+      ruleForm: {
+        username: '',
+        password: '',
+        time_day: '',
+        email: '',
+        state: false,
+        url_id: [],
+        key_word: '第三方、满意度、调查、统计、调研、检查、研究、咨询、巡查、普查、考核、测评、评估、绩效、创建、摸底、核查、入户、监测、社会救助、城市管理',
+        // 网站选择
+        options_u: [
+          {
+            value: '0',
+            label: '全部'
+          }, {
+            value: '1',
+            label: '中国政府采购公告'
+          }, {
+            value: '2',
+            label: '湖北省公共资源交易中心'
+          }, {
+            value: '3',
+            label: '宜昌市公共资源交易中心'
+          }, {
+            value: '4',
+            label: '武汉市政府采购信息发布系统'
+          }, {
+            value: '5',
+            label: '孝感政务服务和大数据管理局'
+          }, {
+            value: '6',
+            label: '黄冈市公共资源交易中心'
+          }, {
+            value: '7',
+            label: '随州政府采购'
+          }, {
+            value: '8',
+            label: '黄石市公共资源交易中心'
+          }, {
+            value: '9',
+            label: '十堰市公共资源交易中心'
+          }, {
+            value: '10',
+            label: '鄂州政府采购'
+          }, {
+            value: '11',
+            label: '荆门市公共资源交易中心'
+          }, {
+            value: '12',
+            label: '荆州市公共资源交易中心'
+          }, {
+            value: '13',
+            label: '咸宁市公共资源交易中心'
+          }, {
+            value: '14',
+            label: '恩施政府采购'
+          }, {
+            value: '15',
+            label: '神农架林区政府采购'
+          }],
+
+      },
+      rules: {
+        username: [
+          {required: true, message: '请输入需要更改的用户名', trigger: 'blur'},
+          {min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur'}
+        ],
+        password: [
+          {required: true, message: '请输入需要更改的密码', trigger: 'blur'},
+          {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
+        ],
+        url_id: [
+          {required: true, message: '选择获取数据的网站', trigger: 'change'}
+        ],
+
+      },
+
+
       size: '',
       uname: 'sss',
       password: 'qwer',
@@ -161,63 +291,9 @@ export default {
       currentPage4: 1,        // 页数
       p_number: 10,
       count_t: 0,             // 数据总数
-      a_url:'/bidding/download/',
 
-      // 网站选择
-      options_u: [
-        {
-          value: '0',
-          label: '全部'
-        }, {
-          value: '1',
-          label: '中国政府采购公告'
-        }, {
-          value: '2',
-          label: '湖北省公共资源交易中心'
-        }, {
-          value: '3',
-          label: '宜昌市公共资源交易中心'
-        }, {
-          value: '4',
-          label: '武汉市政府采购信息发布系统'
-        }, {
-          value: '5',
-          label: '孝感政务服务和大数据管理局'
-        }, {
-          value: '6',
-          label: '黄冈市公共资源交易中心'
-        }, {
-          value: '7',
-          label: '随州政府采购'
-        }, {
-          value: '8',
-          label: '黄石市公共资源交易中心'
-        }, {
-          value: '9',
-          label: '十堰市公共资源交易中心'
-        }, {
-          value: '10',
-          label: '鄂州政府采购'
-        }, {
-          value: '11',
-          label: '荆门市公共资源交易中心'
-        }, {
-          value: '12',
-          label: '荆州市公共资源交易中心'
-        }, {
-          value: '13',
-          label: '咸宁市公共资源交易中心'
-        }, {
-          value: '14',
-          label: '恩施政府采购'
-        }, {
-          value: '15',
-          label: '神农架林区政府采购'
-        }],
       value_u: '0',
       show_s: false,
-
-
       // 日期选择
       pickerOptions: {
         shortcuts: [{
@@ -257,22 +333,109 @@ export default {
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       value_time: '',
       value_t: '',
-
       id_max: 0,       // 每个文件的id 最大值
-
-
       search: '',  // 表格搜素
       textarea2: '', // 添加的关键字符串
       word_v: '',      // 词汇库的选择
-
       word_options: '', //    词汇库名称
-
       all_state: false,
-
 
     }
   },
+  created() {
+
+        this.token = sessionStorage.token || localStorage.token;
+
+    console.log(!this.token)
+    if (!this.token){
+      this.$router.push('/login');
+    }else {
+      this.get_user()
+    }
+
+
+  },
+  watch: {
+    ruleForm(val) {//普通的watch监听
+      console.log("a: ");
+    },
+
+
+  },
   methods: {
+    // 头像上传成功钩子
+    response_avatar(res, file) {
+      this.avatar = this.$settings.Host + '/static/' + res.img_name
+      localStorage.avatar = this.$settings.Host + '/static/' + res.img_name
+
+      console.log(this.avatar)
+                this.$message({
+            message: '恭喜你，成功更换头像！ 如果没出现头像就刷新一下',
+            type: 'success',
+              offset: 100
+          });
+      console.log(this.avatar)
+
+    },
+    // 更换头像
+
+
+    get_user() {
+      let token_s1 = sessionStorage.token || localStorage.token
+      GetUser({
+        headers:{'Authorization':'jwt ' + token_s1
+        }})
+        .then((data) => {
+
+          this.ruleForm.username = data.data.data.username;
+          this.ruleForm.password = data.data.data.password;
+          localStorage.avatar = this.$settings.Host + '/static' + data.data.data.avatar;
+          if (data.data.data.avatar){
+            this.avatar = this.$settings.Host + '/static' + data.data.data.avatar
+          }
+
+          this.ruleForm.email = data.data.data.email;
+          this.ruleForm.state = data.data.data.state;
+          this.ruleForm.url_id = eval(data.data.data.url_id);
+          this.ruleForm.time_day = data.data.data.time_day;
+
+          // 深拷贝数组
+          this.ruleForm1 = JSON.parse(JSON.stringify(this.ruleForm));
+
+
+        })
+        .catch((err) => {
+        this.$message({
+          message: err.data,
+          type: 'error',
+          offset: 100
+        });
+        })
+    },
+    change_u() {
+
+
+      if (Object.values(this.ruleForm).toString() === Object.values(this.ruleForm1).toString()) {
+        this.disabled = true
+      } else {
+        this.disabled = false
+      }
+
+    },
+    change_s() {
+      if (this.ruleForm.email.length < 2) {
+        this.$message({
+          message: '亲~ 要先填邮箱哟！',
+          type: 'error',
+          offset: 100
+        });
+        this.ruleForm.state = false;
+      } else {
+        this.change_u()
+      }
+
+
+    },
     all_get(val) {
 
       // 数组删除指定元素的构造函数
@@ -285,14 +448,14 @@ export default {
       if (val === '0') {
         if (this.all_state) {
           this.all_state = false;
-          this.url_id = []
+          this.ruleForm.url_id = []
         } else {
           this.all_state = true;
-          this.url_id = ['2', '4', '11', '9', '12', '15', '14', '13', '8', '6', '7', '5', '3', '1', '10', '0']
+          this.ruleForm.url_id = ['2', '4', '11', '9', '12', '15', '14', '13', '8', '6', '7', '5', '3', '1', '10', '0']
         }
       } else {
-        if ('0' in this.url_id) {
-          this.url_id.remove('0');
+        if ('0' in this.ruleForm.url_id) {
+          this.ruleForm.url_id.remove('0');
         }
       }
 
@@ -302,77 +465,42 @@ export default {
       this.show_s = this.show_s === false;
 
     },
-    get_user_data(val) {
 
-      axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
-
-      axios.put(BASE_URL + '/bidding/settings/', {
-        uname: this.uname,
-        password: this.password,
-        email: this.email,
-        time_day: this.time_day,
-        url_id: this.url_id,
-        send_time: this.send_time,
-        key_word: this.key_word,
-        state: this.state,
-
-
-      })
-        .then((res) => {
-          console.log(res)
-          alert(res.data.uname)
-
-          this.uname = res.data.uname;
-          this.password = res.data.password;
-          this.email = res.data.email;
-          this.time_day = res.data.time_day;
-          this.url_id = eval(this.url_id);
-          this.send_time = res.data.send_time;
-          if (res.data.key_word) {
-            this.key_word = res.data.key_word;
-          }
-
-          this.state = res.data.state;
-
-
-        })
-        .catch((res) => {
-        })
-
-
-    },
 
     update_data() {
 
 
-      axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
+      let data_send = {
+        username: this.ruleForm.username,
+        password: this.ruleForm.password,
+        state:this.ruleForm.state,
+        url_id:this.ruleForm.url_id,
+        time_day:this.ruleForm.time_day,
+        email:this.ruleForm.email,
+      }
+      // axios请求在这里
 
-      axios.post(BASE_URL + '/bidding/settings/', {
-
-        user_name: this.uname,
-        password: this.password,
-        email: this.email,
-        time_day: this.time_day,
-        url_id: eval(this.url_id),
-        send_time: this.send_time,
-        key_word: this.key_word,
-        state: this.state,
-
-
-      })
+      UpdateUser(
+          {data: data_send}
+      )
         .then((res) => {
           console.log(res)
-          alert(res.data.uname)
+
           this.$message({
             message: '恭喜你，成功修改数据！',
-            type: 'success'
+            type: 'success',
+              offset: 100
           });
           this.show_s = false;
 
         })
-        .catch((res) => {
+        .catch((err) => {
           console.log()
-          this.$message.error('错了哦，网络错误！请联系管理员', res);
+                  this.$message({
+          message: err.data,
+          type: 'error',
+          offset: 100
+        });
         })
 
 
@@ -444,110 +572,12 @@ export default {
     },
 
 
-    // excel 表下载
-    exportExcel() {
-      if (this.d_status === 0) {
-        this.$message.error('亲~ 在下载中不要重复点击呢！');
-
-      } else {
-
-        this.value_time_str = []
-        for (let i in this.value_time) {
-
-          let date = new Date(this.value_time[i])
-          let y = date.getFullYear()
-          let m = date.getMonth() + 1
-          m = m < 10 ? ('0' + m) : m
-          let d = date.getDate()
-          d = d < 10 ? ('0' + d) : d
-          let h = date.getHours()
-          h = h < 10 ? ('0' + h) : h
-          let M = date.getMinutes()
-          M = M < 10 ? ('0' + M) : M
-          let s = date.getSeconds()
-          s = s < 10 ? ('0' + s) : s
-          let dateTime = y + '-' + m + '-' + d + ' ' + h + ':' + M + ':' + s;
-          this.value_time_str.push(dateTime)
-        }
-
-        axios({
-          method: 'post',
-          url: BASE_URL + '/bidding/download/',
-          data: {
-            value_u: this.value_u,
-            value_time: this.value_time_str,
-          },
-          responseType: 'blob',
-        })
-          .then((res) => {
-            this.d_status = 1
-            const filename = res.headers["content-disposition"];
-            const blob = new Blob([res.data]);
-            var downloadElement = document.createElement("a");
-            var href = window.URL.createObjectURL(blob);
-            downloadElement.href = href;
-            downloadElement.download = decodeURIComponent(filename.split("filename=")[1]);
-            document.body.appendChild(downloadElement);
-            downloadElement.click();
-            document.body.removeChild(downloadElement);
-            window.URL.revokeObjectURL(href);
 
 
-            console.log(res.data)
-          })
-          .catch((err) => {
-            this.d_status = 1
-            console.log(err.data)
-          })
-      }
-    },
 
 
-    // 词汇库选择
-    change_word_v() {
-      axios.defaults.headers.post['X-CSRFToken'] = '{{ csrf_token }}'
-      axios.post(BASE_URL + '/bidding/word/', {
-        word_v: this.word_v,
 
 
-      })
-        .then((res) => {
-          console.log(res.data)
-
-          this.table1Data = res.data;
-          let word_str = []
-          for (let i = 0; i < this.table1Data.length; i++) {
-
-            word_str.push(this.table1Data[i]['name'])
-          }
-          this.data_word = {'word_str': JSON.stringify(word_str)};
-          this.count_t = res.data.count_t;
-          this.tables_name = res.data.tables_name
-          alert(this.count_t)
-
-        })
-        .catch((err) => {
-          console.log(err)
-
-        })
-    },
-
-    // 删除行
-    deleteRow(index, rows) {
-
-      let a = this.table1Data.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))
-
-
-      let a_index = this.table1Data.indexOf(a[index])
-
-      rows.splice(a_index, 1);
-      let word_str = []
-      for (let i = 0; i < this.table1Data.length; i++) {
-
-        word_str.push(this.table1Data[i]['name'])
-      }
-      this.data_word = {'word_str': JSON.stringify(word_str), 'word_v': this.word_v};
-    },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -729,6 +759,19 @@ export default {
 </script>
 
 <style scoped>
+>>> .el-upload__input {
+  display: none;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  .card_c{
+  width:800px; margin-left: 0px;margin-top: 20px;
+  }
+}
+
+
 .card {
   position: relative;
   display: flex;

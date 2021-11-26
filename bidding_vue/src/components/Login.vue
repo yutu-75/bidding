@@ -22,24 +22,27 @@
             </div>
             <h2 class="mt-3 text-center">Sign In</h2>
             <p class="text-center">输入您的用户名和密码以访问管理面板.</p>
-            <form class="mt-4">
+            <form action="#" method="post" class="mt-4">
               <div class="row" style="height: 300px;">
                 <div class="col-lg-12">
                   <div class="form-group">
+
                     <label class="text-dark" for="uname">Username</label>
-                    <input class="form-control" id="uname" type="text"
+                    <input v-model="username" class="form-control" id="uname" type="text"
                            placeholder="请输入你用户名">
                   </div>
                 </div>
                 <div class="col-lg-12">
                   <div class="form-group">
                     <label class="text-dark" for="pwd">Password</label>
-                    <input class="form-control" id="pwd" type="password"
+                    <input v-model="password" class="form-control" id="pwd" type="password"
                            placeholder="请输入你的密码">
                   </div>
                 </div>
                 <div class="col-lg-12 text-center">
-                  <button type="submit" class="btn btn-block btn-dark">Sign In</button>
+                  <div type="submit" @click="loginhander" style="line-height: 32px;" class="btn btn-block btn-dark">Sign
+                    In
+                  </div>
                 </div>
                 <div class="col-lg-12 text-center mt-5">
                   还没有账号？ <a href="#" class="text-danger">联系管理员</a>
@@ -57,16 +60,60 @@
 </template>
 
 <script>
-
+import {fetchData} from '@/api/index';
 
 export default {
   name: "Login",
   data() {
     return {
+      username: '',
+      password: '',
       title: 'Home组件'
     }
   },
-  methods: {}
+  methods: {
+    loginhander() {
+
+
+      let data_send = {
+        username: this.username,
+        password: this.password,
+      }
+      // axios请求在这里
+      fetchData(
+        {data: data_send}
+      )
+        .then((data) => {
+
+          if (data.data.token){
+                 localStorage.token = data.data.token;
+          }else {
+                      this.$alert('服务端未获取到数据,请联系管理员！', '登录失败', {
+            confirmButtonText: '确定',
+          });
+                      return
+          }
+
+          localStorage.username = data.data.username;
+          if(data.data.avatar){
+              localStorage.avatar = this.$settings.Host+ '/static/'+ data.data.avatar;
+          }
+
+
+          this.$router.push('/');
+        })
+        .catch((err) => {
+
+          this.$alert('用户名或者密码错误', '登录失败', {
+            confirmButtonText: '确定',
+
+          });
+        });
+
+
+    },
+
+  }
 }
 
 </script>
@@ -3902,7 +3949,7 @@ dd, h1, h2, h3, h4, h5, h6, label {
 
 @font-face {
   font-family: simple-line-icons;
- font-weight: 400;
+  font-weight: 400;
   font-style: normal
 }
 
@@ -8082,9 +8129,11 @@ select.form-control[multiple], select.form-control[size], textarea.form-control 
   border-color: #ff4f70;
   box-shadow: 0 0 0 .2rem rgba(255, 79, 112, .25)
 }
-.btn{
+
+.btn {
   height: 40px;
 }
+
 .custom-control-input.is-invalid ~ .custom-control-label::before, .was-validated .custom-control-input:invalid ~ .custom-control-label::before {
   border-color: #ff4f70
 }
@@ -14892,7 +14941,7 @@ a.bg-purple:focus, a.bg-purple:hover, button.bg-purple:focus, button.bg-purple:h
 }
 
 .text-center {
-line-height: 50px;
+  line-height: 50px;
   text-align: center !important
 }
 
@@ -17814,7 +17863,7 @@ ul.list-style-none li a:hover {
 
 @font-face {
   font-family: TofinoPersonal-Medium;
- font-weight: 400;
+  font-weight: 400;
   font-style: normal
 }
 
@@ -17832,19 +17881,19 @@ ul.list-style-none li a:hover {
 
 @font-face {
   font-family: Gilmer-Heavy;
- font-weight: 400;
+  font-weight: 400;
   font-style: normal
 }
 
 @font-face {
   font-family: Gilmer-Regular;
- font-weight: 400;
+  font-weight: 400;
   font-style: normal
 }
 
 @font-face {
   font-family: Gilmer-Medium;
- font-weight: 400;
+  font-weight: 400;
   font-style: normal
 }
 

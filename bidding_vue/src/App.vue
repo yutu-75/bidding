@@ -1,7 +1,8 @@
 <template>
   <div id="app">
 
-    <router-view/>
+           <router-view></router-view>
+
   </div>
 </template>
 
@@ -17,6 +18,7 @@ body {
   background-color: #f9fbfd;
 
   margin: 0px;
+
 }
 #app {
     margin: 0px;
