@@ -7,7 +7,7 @@
 
 #### login界面
 
-![image-20220202200909107](typora-user-images\image-20220202200909107.png)
+![image-20220202200909107](./typora-user-images/image-20220202200909107.png)
 
 #### 查询界面
 
