@@ -3,8 +3,8 @@ from celery.schedules import crontab
 
 
 
-broker_url = "redis://:listendata315*@49.4.31.249:6379/1"   # 使用redis存储任务队
-result_backend = "redis://:listendata315*@49.4.31.249:6379/4"  # 使用redis存储结果
+broker_url = "redis://:123456*@127.0.0.1:6379/1"   # 使用redis存储任务队
+result_backend = "redis://:123456@127.0.0.1:6379/4"  # 使用redis存储结果
 
 task_serializer = 'json'
 result_serializer = 'json'
