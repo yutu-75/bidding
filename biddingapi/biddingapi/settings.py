@@ -137,8 +137,8 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',  	 	# 引擎
             'NAME': 'bidding',                        		# 数据库名
             'USER':'root',                          			# 用户名
-            'PASSWORD':'listendata315*',                         	 	# 密码
-            'HOST':'49.4.31.249',                     		# IP
+            'PASSWORD':'123456',                         	 	# 密码
+            'HOST':'127.0.0.1',                     		# IP
             'PORT': 3306,                           		# 端口号
         }
 }
