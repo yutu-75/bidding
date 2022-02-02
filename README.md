@@ -7,11 +7,15 @@
 
 #### login界面
 
+<<<<<<< HEAD
 ![image-20220202200909107](./image-20220202200909107.png)
+=======
+![image-20220202200909107](.\typora-user-images\image-20220202200909107.png)
+>>>>>>> 8712ffb42256d5c35783b26956b192046b06e609
 
 #### 查询界面
 
-![image-20220202201024401](typora-user-images\image-20220202201024401.png)
+![image-20220202201024401](typora-user-images/image-20220202201024401.png)
 
 #### user配置界面
 
