@@ -3,8 +3,8 @@ from celery.schedules import crontab
 
 
 
-broker_url = "redis://:500237@47.108.162.205:6379/2"   # 使用redis存储任务队列
-result_backend = "redis://:500237@47.108.162.205:6379/6"  # 使用redis存储结果
+broker_url = "redis://:listendata315*@49.4.31.249:6379/1"   # 使用redis存储任务队
+result_backend = "redis://:listendata315*@49.4.31.249:6379/4"  # 使用redis存储结果
 
 task_serializer = 'json'
 result_serializer = 'json'
@@ -29,8 +29,8 @@ imports = [
 beat_schedule = {
     "test1": {
         "task": "my_celery.celery_task.b1_task.celery_run",  #执行的函数
-        # "schedule": crontab(minute="*/10"),   # every minute 每分钟执行
-        "schedule": crontab(minute=26, hour="9"),  # every minute 每天凌晨十二点执行
+        #"schedule": crontab(minute="54"),   # every minute 每分钟执行
+        "schedule": crontab(minute=20, hour="8,14"),  # every minute 每天凌晨十二点执行
         "args": ()  # # 任务函数参数
     },
 # celery -A my_celery.main worker -l info -P eventlet

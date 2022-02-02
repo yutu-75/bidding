@@ -2,7 +2,7 @@
 import sys
 import pathlib
 sys.path.append(str(pathlib.Path.cwd().parent.parent))      # 解决命令找不到包路径
-from bid.spider_bidding.share_spider import *
+from ..spider_bidding.share_spider import *
 
 set_url = set()
 

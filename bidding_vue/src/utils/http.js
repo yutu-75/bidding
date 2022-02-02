@@ -6,7 +6,7 @@ import Host from '@/settings';
 // import axios from '@/utils/http';
 const getBaseUrl = (env) => {
   let base = {
-    production: '/',
+    production: Host.Host,
     development: Host.Host,
     test: 'http://localhost:3001',
   }[env];

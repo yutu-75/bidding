@@ -8,12 +8,12 @@ django.setup()
 
 # print(import_module('config'))
 
-app = Celery('my_celery.main', broker='redis://:500237@47.108.162.205:6379/2')
+app = Celery('my_celery.main', broker='redis://:listendata315*@49.4.31.249/2')
 
 app.conf.ONCE = {
   'backend': 'celery_once.backends.Redis',
   'settings': {
-    'url': 'redis://:500237@47.108.162.205:6379/2',
+    'url': 'redis://:listendata315*@49.4.31.249:6379/1',
     'default_timeout': 60 * 60 * 3
   }
 }

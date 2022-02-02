@@ -17,6 +17,9 @@ from biddingapi.apps.bid.spider_bidding.ggzyjy_yichang_gov_cn import main12
 from biddingapi.apps.bid.spider_bidding.ggzyjy_shiyan_gov_cn import main13
 from biddingapi.apps.bid.spider_bidding.b_121_61_253_44 import main14
 from biddingapi.apps.bid.spider_bidding.b_27_17_40_162_8000 import main15
+from biddingapi.apps.bid.cron import my_job
+
+
 
 
 def test33():
@@ -49,7 +52,7 @@ def test33():
         print('_________________________main13_____________________________')
         main13()
         print('_________________________main14_____________________________')
-        main14()
+ #       main14()
         print('_________________________main15_____________________________')
         main15()
     except Exception as e:
@@ -68,8 +71,10 @@ def test44():
 def celery_run():
     print('______________celery_run__________________')
     test33()
+    my_job()
     return 'ok'
     # test44()
+
 # if __name__ == '__main__':
 
     # celery_run()

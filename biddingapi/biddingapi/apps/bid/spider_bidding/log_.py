@@ -3,7 +3,7 @@ import time
 from datetime import datetime,timedelta
 from pathlib import Path
 import os
-from bid.spider_bidding.config import log_day, log_file_size
+from ..spider_bidding.config import log_day, log_file_size
 
 
 def log_write(content: str) -> None:

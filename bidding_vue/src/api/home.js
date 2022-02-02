@@ -13,7 +13,7 @@ export const SelectData = options => axios.request({
   url: '/bidding/',
   method:'post',
   headers:{
-    'Authorization':'jwt ' + token_s1
+    'Authorization':'jwt ' + sessionStorage.token || localStorage.token
   }
 
 });
@@ -23,7 +23,7 @@ export const UpdateUser = options => axios.request({
   url: '/users/settings/',
   method:'post',
   headers:{
-    'Authorization':'jwt ' + token_s1
+    'Authorization':'jwt ' + sessionStorage.token || localStorage.token
   }
 
 });
@@ -33,7 +33,9 @@ export const GetUser = options => axios.request({
   ...options,
   url: '/users/settings/',
   method:'get',
-
+  headers:{
+    'Authorization':'jwt ' + sessionStorage.token || localStorage.token
+  }
 
 });
 

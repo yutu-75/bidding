@@ -44,7 +44,7 @@
 
         <div style="width: 500px;margin: 30px;">
 
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="left" label-width="150px"
+          <el-form :model="ruleForm" :rules="ruleForm" ref="ruleForm" label-position="left" label-width="150px"
                    class="demo-ruleForm">
             <el-form-item label="用户名" prop="username">
               <el-input v-model="ruleForm.username" @input="change_u"></el-input>
@@ -62,7 +62,7 @@
       { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
     ]"
             >
-              <el-input v-model="ruleForm.email" @input="change_u"></el-input>
+              <el-input v-model="ruleForm.email" @input="change_u(rules)"></el-input>
             </el-form-item>
 
             <el-form-item
@@ -76,7 +76,7 @@
               <el-input type="age" v-model.number="ruleForm.time_day" autocomplete="off" @input="change_u"></el-input>
             </el-form-item>
 
-            <el-form-item label="选择获取数据的网站" style="" prop="url_id">
+            <el-form-item label="选择获取数据的网站" style="" >
 
               <el-select
                 v-model="ruleForm.url_id"
@@ -109,7 +109,7 @@
 
 
             <el-form-item>
-              <el-button type="primary" :disabled="disabled" style="width: 200px;" @click="update_data()">
+              <el-button type="primary" :disabled="disabled" style="width: 200px;" @click="update_data('ruleForm')">
                 立即创建
               </el-button>
               <!--              <el-button @click="resetForm('ruleForm')">重置</el-button>-->
@@ -270,9 +270,9 @@ export default {
           {required: true, message: '请输入需要更改的密码', trigger: 'blur'},
           {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
         ],
-        url_id: [
-          {required: true, message: '选择获取数据的网站', trigger: 'change'}
-        ],
+        // url_id: [
+        //   {required: true, message: '选择获取数据的网站', trigger: 'change'}
+        // ],
 
       },
 
@@ -348,7 +348,7 @@ export default {
 
     console.log(!this.token)
     if (!this.token){
-      this.$router.push('/login');
+      // this.$router.push('/login');
     }else {
       this.get_user()
     }
@@ -412,17 +412,19 @@ export default {
         });
         })
     },
-    change_u() {
+    change_u(a) {
+      console.log(a)
+
+    this.disabled = !this.disabled;
 
 
-      if (Object.values(this.ruleForm).toString() === Object.values(this.ruleForm1).toString()) {
-        this.disabled = true
-      } else {
-        this.disabled = false
-      }
+      // this.disabled = Object.values(this.ruleForm).toString() === Object.values(this.ruleForm1).toString();
 
     },
     change_s() {
+
+      this.disabled = !this.disabled;
+
       if (this.ruleForm.email.length < 2) {
         this.$message({
           message: '亲~ 要先填邮箱哟！',
@@ -431,7 +433,7 @@ export default {
         });
         this.ruleForm.state = false;
       } else {
-        this.change_u()
+        // this.change_u()
       }
 
 
@@ -467,10 +469,11 @@ export default {
     },
 
 
-    update_data() {
+    update_data(formName) {
+      this.$refs[formName].validate((valid) => {
+          if (valid) {
 
-
-      let data_send = {
+                  let data_send = {
         username: this.ruleForm.username,
         password: this.ruleForm.password,
         state:this.ruleForm.state,
@@ -479,12 +482,12 @@ export default {
         email:this.ruleForm.email,
       }
       // axios请求在这里
-
+let token_s1 = sessionStorage.token || localStorage.token
       UpdateUser(
-          {data: data_send}
+          {data: data_send,headers:{'Authorization':'jwt ' + token_s1}}
       )
         .then((res) => {
-          console.log(res)
+
 
           this.$message({
             message: '恭喜你，成功修改数据！',
@@ -492,6 +495,7 @@ export default {
               offset: 100
           });
           this.show_s = false;
+          this.disabled = true;
 
         })
         .catch((err) => {
@@ -502,6 +506,21 @@ export default {
           offset: 100
         });
         })
+
+
+          } else {
+          this.$message({
+          message: '请正确填写内容呢！',
+          type: 'error',
+          offset: 100
+        });
+            console.log('error submit!!');
+            return false;
+          }
+        });
+
+
+
 
 
     },
@@ -634,7 +653,7 @@ export default {
     },
 
     handleSelectionChange(val, index) {
-      console.log(val)
+
       let val1 = []
       val.forEach((alert) => {
         console.log(alert)

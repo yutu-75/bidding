@@ -6,7 +6,7 @@ import router from './router'
 import animated from 'animate.css'
 import $ from 'jquery'
 
-import settings from "./settings";
+import settings from "@/settings";
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'

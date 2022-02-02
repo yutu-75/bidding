@@ -23,7 +23,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, r"biddingapi/apps"))
 SECRET_KEY = 'django-insecure-qhe=+9f(dhzz0r@b7ayu%2a8s635!pnmoym0te=7ca+ux8z8_z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -136,8 +137,8 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',  	 	# 引擎
             'NAME': 'bidding',                        		# 数据库名
             'USER':'root',                          			# 用户名
-            'PASSWORD':'123456',                         	 	# 密码
-            'HOST':'127.0.0.1',                     		# IP
+            'PASSWORD':'listendata315*',                         	 	# 密码
+            'HOST':'49.4.31.249',                     		# IP
             'PORT': 3306,                           		# 端口号
         }
 }
@@ -182,12 +183,18 @@ USE_TZ = False
 
 # 访问静态文件的url地址前缀
 STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR/'static'
+
+
 # 设置django的静态文件目录
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "uploads"),
-    os.path.join(BASE_DIR, "static"),
+    # os.path.join(BASE_DIR, "static"),
     # os.path.join(BASE_DIR, "uploads")
 ]
+
+
 # 项目中存储上传文件的根目录[暂时配置]，注意，uploads目录需要手动创建否则上传文件时报错
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 # 访问上传文件的url地址前缀

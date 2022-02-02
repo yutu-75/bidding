@@ -7,7 +7,7 @@ sys.path.append(str(pathlib.Path.cwd().parent.parent))      # 解决命令找不
 # 湖北省公共资源交易中心
 # https://www.hbggzyfwpt.cn/
 
-from bid.spider_bidding.share_spider import *
+from ..spider_bidding.share_spider import *
 get_cookie_u = 'http://www.hbggzyfwpt.cn/'
 set_url = set()
 #

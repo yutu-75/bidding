@@ -116,7 +116,7 @@
             <div v-show="false">
               <a href="/">
                 <img class="faa-shake animated-hover"
-                     src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png"
+<!--                     src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/none.png"-->
                      width="30" height="30"> </a>
               <div class="header-user-menu">
                 <div class="herder-user-name no-logged">Whether to <a href="https://2heng.xin/login/" target="_blank"
@@ -137,6 +137,8 @@
 
 
 <script>
+import {GetUser} from "../../api";
+
 export default {
   name: 'Header',
   data() {
@@ -161,6 +163,22 @@ export default {
     }
   },
   created() {
+
+      GetUser()
+        .then((data) => {
+
+
+
+        })
+        .catch((err) => {
+        this.$message({
+          message:  '身份验证已过期,请重新登录！'+ JSON.stringify(err.data),
+          type: 'error',
+          offset: 100
+        });
+        this.$router.push('/login');
+        })
+
 
     this.token = sessionStorage.token || localStorage.token;
     this.username = sessionStorage.username || localStorage.username;
@@ -388,7 +406,7 @@ function scrollBar() {
   /*background-size: cover;*/
   /*-webkit-transition: all .5s ease-in-out;*/
   transition: all .5s ease-in-out;
-  cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
+  /*cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;*/
   opacity: 1
 }
 

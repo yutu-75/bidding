@@ -6,14 +6,17 @@ import requests
 from lxml import etree
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from bid.spider_bidding.config import crux
+from .config import crux
 from selenium import webdriver
 
 from django.db import connection, connections
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "biddingapi.settings")  # manage.py文件中有同样的环境配置
 django.setup()  # 启动django项目
+#from ..models import Collect, Bidding
 from bid.models import Collect, Bidding
-from bid.spider_bidding.log_ import log_write
+# from  bid.models import Collect, Bidding
+from .log_ import log_write
+# from bid.spider_bidding.log_ import log_write
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',

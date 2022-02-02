@@ -7,9 +7,9 @@ import pathlib
 import requests
 
 sys.path.append(str(pathlib.Path.cwd().parent.parent))  # 解决命令找不到包路径
-from bid.spider_bidding.share_spider import *
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from ..spider_bidding.share_spider import *
+#from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
 set_url = set()
 
 # from requests.packages import urllib3

@@ -45,8 +45,27 @@
                   </div>
                 </div>
                 <div class="col-lg-12 text-center mt-5">
-                  还没有账号？ <a href="#" class="text-danger">联系管理员</a>
+                  还没有账号？
+
+                    <el-popover
+    placement="bottom"
+    title="联系管理员"
+    width="200"
+    trigger="manual"
+    content="微信 or QQ:  395243043"
+    v-model="visible">
+
+                  <a href="###" class="text-danger" @click="visible = !visible" slot="reference">联系管理员</a>
+
+  </el-popover>
+
+
+
                 </div>
+
+
+
+
               </div>
             </form>
           </div>
@@ -67,6 +86,7 @@ export default {
   data() {
     return {
       username: '',
+       visible: false,
       password: '',
       title: 'Home组件'
     }
@@ -87,6 +107,7 @@ export default {
 
           if (data.data.token){
                  localStorage.token = data.data.token;
+                 sessionStorage.token = data.data.token;
           }else {
                       this.$alert('服务端未获取到数据,请联系管理员！', '登录失败', {
             confirmButtonText: '确定',

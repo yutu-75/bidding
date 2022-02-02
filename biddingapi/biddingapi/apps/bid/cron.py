@@ -41,22 +41,24 @@ def get_file():
 
         if not key_word:
             key_word = '第三方、满意度、调查、统计、调研、检查、研究、咨询、巡查、普查、考核、测评、评估、绩效、创建、摸底、核查、入户、监测、社会救助、城市管理'
-
+        print(url_id,type(url_id))
+     
         if not url_id:
             value_u = ['0']
-        elif type(url_id) != type([]):
+        elif type(url_id) != type([]) and '[' not in url_id:
             value_u = [str(url_id)]
+            #print(value_u,'elif********************')
         else:
             value_u = eval(url_id)
 
         if not time_day:
             time_day = '1'
 
-
+        #print(value_u,'******************************')
 
         s_time = datetime.now()
 
-        value_time = [(s_time - timedelta(days=360)).strftime('%Y-%m-%d %H:%M:%S'),s_time.strftime('%Y-%m-%d %H:%M:%S')]
+        value_time = [(s_time - timedelta(days=time_day)).strftime('%Y-%m-%d %H:%M:%S'),s_time.strftime('%Y-%m-%d %H:%M:%S')]
 
         if key_word:
             key_word = '|'.join(key_word.replace("，", ',').replace("、", ',').split(','))
@@ -267,10 +269,10 @@ def my_job():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
 
 
-sched = BlockingScheduler(timezone='Asia/Shanghai')
-sched.add_job(my_job, 'cron',second = '*/5')
-# sched.add_job(my_job, 'cron',hour='17,8',minute=52,second=59)
-sched.start()
+#sched = BlockingScheduler(timezone='Asia/Shanghai')
+#sched.add_job(my_job, 'cron',second = '*/5')
+#sched.add_job(my_job, 'cron',day_of_week='*',hour='17,8',minute=34,second=10)
+#sched.start()
 
 
-# cron_send()
+#cron_send()

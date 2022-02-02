@@ -432,7 +432,25 @@ export default {
             start.setTime(start.getTime() - 3600 * 1000 * 24);
             picker.$emit('pick', [start, end]);
           }
-        }, {
+        },{
+          text: '最近三天',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 *3);
+            picker.$emit('pick', [start, end]);
+          }
+        },
+          {
+          text: '最近十天',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 *10);
+            picker.$emit('pick', [start, end]);
+          }
+        },
+          {
           text: '最近一个月',
           onClick(picker) {
             const end = new Date();
@@ -604,7 +622,7 @@ export default {
           download: 'ture',
 
         }
-
+let token_s1 = sessionStorage.token || localStorage.token
         SelectData(
           {data: data_send, responseType: 'blob'},
         )
@@ -651,9 +669,9 @@ export default {
         key_word: this.key_word,
         customer_name: this.customer_name,
       }
-
+let token_s1 = sessionStorage.token || localStorage.token
       SelectData(
-        {data: data_send}
+        {data: data_send,headers:{'Authorization':'jwt ' + token_s1}}
       )
         .then((data) => {
           console.log(data)
