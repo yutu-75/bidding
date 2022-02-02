@@ -11,7 +11,7 @@
 
 #### 查询界面
 
-![image-20220202201024401](typora-user-images\image-20220202201024401.png)
+![image-20220202201024401](typora-user-images/image-20220202201024401.png)
 
 #### user配置界面
 
