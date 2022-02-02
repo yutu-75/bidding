@@ -7,15 +7,15 @@
 
 #### login界面
 
-![image-20220202200909107](C:\Users\lixin_data\AppData\Roaming\Typora\typora-user-images\image-20220202200909107.png)
+![image-20220202200909107](typora-user-images\image-20220202200909107.png)
 
 #### 查询界面
 
-![image-20220202201024401](C:\Users\lixin_data\AppData\Roaming\Typora\typora-user-images\image-20220202201024401.png)
+![image-20220202201024401](typora-user-images\image-20220202201024401.png)
 
 #### user配置界面
 
-![image-20220202201121882](C:\Users\lixin_data\AppData\Roaming\Typora\typora-user-images\image-20220202201121882.png)
+![image-20220202201121882](typora-user-images\image-20220202201121882.png)
 
 
 
