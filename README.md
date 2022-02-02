@@ -27,5 +27,5 @@ login界面
 
 后端开发：
 
-采用Python的django框架。定时任务采用的celery框架
+采用Python3.9的django3框架。定时任务采用的celery框架
 
