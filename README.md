@@ -7,7 +7,7 @@
 
 login界面
 
-![image107](http://www.yanilo.top/drawing_bed/image-20220202200909107.png)
+![image107](/typora-user-images/image-20220202200909107.png)
 
 #### 查询界面
 
