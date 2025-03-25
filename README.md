@@ -11,11 +11,11 @@ login界面
 
 #### 查询界面
 
-![image-20220202201024401](http://www.yanilo.top/drawing_bed/image-20220202201024401.png)
+![image-20220202201024401](/typora-user-images/image-20220202201024401.png)
 
 #### user配置界面
 
-![image-20220202201121882](http://www.yanilo.top/drawing_bed/image-20220202201121882.png)
+![image-20220202201121882](/typora-user-images/image-20220202201121882.png)
 
 
 
